@@ -106,7 +106,10 @@ router.post('/',async (req,res)=>{
  }    
 })
 
-
+router.get('/getcurrentuser',async(req,res)=>{
+  const result = await User.findById("60380e67e557ee5e0c8921f6")
+  res.send(result);
+})
 router.post('/addmessage',async(req,res)=>{
 
 

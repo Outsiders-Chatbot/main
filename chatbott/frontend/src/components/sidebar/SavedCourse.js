@@ -2,8 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import Dialogs from './additionalstuff/Dialogs'
 function SavedCourse() {
-    return (
+    const [open, setOpen] = React.useState(false);
+      
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+    return (<>
         <Container>
              <CourseAvatar>
             <img src="https://cdn.auth0.com/blog/illustrations/react.png"/>
@@ -14,13 +20,15 @@ function SavedCourse() {
             </CourseDetails>
             <Func>
                 <div>
-                <DetailButton onClick={()=>alert('detailButton')}>
+                <DetailButton onClick={()=>handleClickOpen()}>
                 <OpenInNewIcon className="detail"/>
                 </DetailButton>
                 
                 </div>
             </Func>
         </Container>
+          <Dialogs open={open} setOpen={setOpen} />
+          </>
     )
 }
 
@@ -76,21 +84,16 @@ padding  : 5px;
 display: flex ;
 align-items : center;
     .detail:hover{
-        color : red;
+        color : #fee103;
         cursor : pointer;
     }
-    .save:hover{
-        color:green;
-        cursor : pointer;       
-    }
+
     
     
 `
-const SaveButton = styled.button`
-border : none ;
-background-color : transparent;
-`
+
 const DetailButton = styled.button`
 border : none ;
 background-color : transparent;
+:focus{outline: none;}
 ` 

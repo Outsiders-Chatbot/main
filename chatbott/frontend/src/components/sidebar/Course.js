@@ -2,8 +2,23 @@ import React from 'react'
 import styled from 'styled-components'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import Dialogs from './additionalstuff/Dialogs'
+import SnackSave from './additionalstuff/SnackSave'
+
+
 function Course() {
-    return (
+    const [open, setOpen] = React.useState(false);
+      
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const [openSlack, setOpenSlack] = React.useState(false);
+    
+      const handleClick = () => {
+        setOpenSlack(true);
+      };
+    return (<>
         <Container>
              <CourseAvatar>
             <img src="https://cdn.auth0.com/blog/illustrations/react.png"/>
@@ -14,11 +29,11 @@ function Course() {
             </CourseDetails>
             <Func>
                 <div>
-                <DetailButton onClick={()=>alert('detailButton')}>
+                <DetailButton onClick={()=>handleClickOpen()}>
                 <OpenInNewIcon className="detail"/>
                 </DetailButton>
                 
-                <SaveButton onClick={()=>alert('SaveButton')}>
+                <SaveButton onClick={()=>handleClick()}>
                     
                 <BookmarkIcon className="save"/>
 
@@ -26,14 +41,17 @@ function Course() {
                 </div>
             </Func>
         </Container>
-    )
+        <Dialogs open={open} setOpen={setOpen} />
+        <SnackSave  openSlack={openSlack} setOpenSlack={setOpenSlack} />
+        
+        </>)
 }
 
 export default Course
 
 const Container = styled.div`
 padding :2px;
-  margin-top :10px;
+  margin-top :8px;
   width: 100%;
   height:70px;
   display: grid;
@@ -97,8 +115,11 @@ grid-template-rows: 50% auto ;
 const SaveButton = styled.button`
 border : none ;
 background-color : transparent;
+    :focus{outline: none;}
+    
 `
 const DetailButton = styled.button`
 border : none ;
 background-color : transparent;
+   :focus{outline: none;}
 ` 

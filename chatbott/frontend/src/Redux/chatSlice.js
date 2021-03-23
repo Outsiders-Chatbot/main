@@ -1,26 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import  axios  from "../axios/axios";
 const initialState = {
-    messages : [ {
-        msg : 'hey i m khalil ',
-        source : 'user' 
-    },
-    {
-        msg : 'hey i m chatbot ',
-        source : 'bot' 
-    },
-    {
-        msg : 'how are you ',
-        source : 'bot' 
-    },
-    {
-        msg : 'im good how are you ',
-        source : 'user' 
-    },
-    {
-        msg : 'im fine  ',
-        source : 'bot' 
-    }]
+    messages : []
 }
 
 export const chatSlice = createSlice({
@@ -31,6 +12,9 @@ export const chatSlice = createSlice({
         addmessage : (state , action) => {
             const message = action.payload ;
             state.messages.push(message)
+        },
+        initialingData : (state , action)=>{
+            state.messages = action.payload;
         }
     }
 })
@@ -41,7 +25,15 @@ export const selectMessages = (state) => {
     };
 
 
-export const {addmessage} = chatSlice.actions
+export const {addmessage,initialingData} = chatSlice.actions
 
+
+export const fetchMessages = ()=> async (dispatch) => {
+      const response = await axios.get('/getcurrentuser')
+      console.log(response.data.messages);
+      dispatch(initialingData(response.data.messages))
+    }
+  
+  
 
 export default chatSlice.reducer;

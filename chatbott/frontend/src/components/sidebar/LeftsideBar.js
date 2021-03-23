@@ -3,8 +3,13 @@ import React from 'react'
 import styled from 'styled-components'
 import Course from './Course'
 import SavedCourse from './SavedCourse'
-
+import SavedDialogs from './additionalstuff/SavedDialogs'
 function LeftsideBar() {
+  const [open, setOpen] = React.useState(false);
+      
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
     return (
         <Container>
             <Logo>
@@ -17,8 +22,13 @@ function LeftsideBar() {
             </Logo>
             <SavedCourses>
               <SavedCoursesBox>
-              <strong style={{fontFamily:'cursive'}}>Saved Courses :
+                <Header>
+                <strong style={{fontFamily:'cursive'}}>Saved Courses :
                   </strong>  
+                  <SavedDialogs  open={open} setOpen={setOpen}/>
+                  <span onClick={()=>{handleClickOpen()}}>See all</span>
+                </Header>
+              
                 <SavedCourse/>
                 <SavedCourse/>
               </SavedCoursesBox>
@@ -45,7 +55,7 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: grid;
-  grid-template-rows: 40px 240px auto ;
+  grid-template-rows: 40px 240px 435px ;
   `
 const Logo = styled.div`
 width: 100%;
@@ -68,7 +78,18 @@ height:100%;
  }
 
 `
-
+const Header = styled.div`
+display : flex ;
+justify-content : space-between;
+ span  {
+   color: grey;
+   font-style : italic;
+   :hover{
+     color :gold;
+     cursor : pointer;
+   }
+ }
+`
 const SavedCourses = styled.div`
 padding : 15px;
 width: 100%;
@@ -85,16 +106,17 @@ overflow : hidden;
 box-shadow :0 4px 6px -2px rgba(0, 0, 0, 0.4);
   `
 const RecommandedCourses = styled.div`
-padding : 15px;
+padding : 2px 15px;
 width: 100%;
 height: 100%;
   `
 const RecommandedCoursesBox = styled.div`
-padding : 9px 15px;
+padding : 5px 15px;
 width: 100%;
 height: 100%;
 background-color :white;
-justify-content : center;
+display : grid ;
+grid-template-rows: 23px auto ;
 overflow : hidden;
 border-bottom : 0.8px solid grey ;
 

@@ -4,7 +4,7 @@ import ChatMessage from './Chat/ChatMessage'
 import MessageInput from './Chat/MessageInput'
 import { useDispatch } from 'react-redux'
 import axios from '../axios/axios'
-import {addmessage,selectMessages} from '../Redux/chatSlice'
+import {addmessage,fetchMessages} from '../Redux/chatSlice'
 
 function Chatbot() {
     const  dispatch = useDispatch();
@@ -14,6 +14,7 @@ function Chatbot() {
                 source : 'event',
                 msg : 'welcomeToTheParty'
             }
+            dispatch(fetchMessages())
             const BotAnswer = await axios.post('/events',eventmsg)
             console.log(BotAnswer.data);
             dispatch(addmessage(BotAnswer.data));
