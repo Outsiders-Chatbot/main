@@ -35,5 +35,8 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: grid;
-  grid-template-columns:  minmax(0,400px) minmax(600px,auto) minmax(0,400px);
+  grid-template-columns:  400px minmax(600px,1fr)  400px;
+  @media (max-width: 1200px) { 
+    grid-template-columns:  0% 100% 0%;
+  }
   `

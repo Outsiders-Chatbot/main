@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Dialogs from './additionalstuff/Dialogs'
+import ProgressBar from './additionalstuff/ProgressBar';
 function SavedCourse() {
     const [open, setOpen] = React.useState(false);
       
@@ -16,7 +17,7 @@ function SavedCourse() {
             </CourseAvatar>
             <CourseDetails>
                 <div style={{fontStyle:"italic" ,fontSize: "18px" }}>Course name</div>
-                <div style={{fontFamily: "cursive" ,fontSize: "13px"}}>Course Domain</div>
+                <ProgressBar Coursename="angular"  percentage="40" />
             </CourseDetails>
             <Func>
                 <div>
