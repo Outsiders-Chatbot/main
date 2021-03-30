@@ -151,7 +151,7 @@ router.post('/events',async (req,res)=>{
   };
  try
   {
-  // Send request and log result
+  // Send request and log result too
   const responses = await sessionClient.detectIntent(request);
   console.log('Detected intent');
   const result = responses[0].queryResult;
