@@ -3,6 +3,8 @@ const router = express.Router();
 module.exports = router;
 
 const {User} = require('../Models/user')
+const {Course} = require('../Models/Course')
+
 
 const uuid = require('uuid');
 const config = require('../config/dev')
@@ -36,6 +38,7 @@ const credentials = {
 
 const dialogflow = require('@google-cloud/dialogflow');
 
+
 // Instantiates a session client
 const sessionClient = new dialogflow.SessionsClient({credential:credentials});
 const sessionPath = sessionClient.projectAgentSessionPath(
@@ -43,6 +46,33 @@ const sessionPath = sessionClient.projectAgentSessionPath(
   sessionId
 );
 
+router.post('/addCourse',async(req,res)=>{
+  const course = new Course({
+    title:req.body.title,
+    author:req.body.author,
+    description:req.body.description,
+    domain:req.body.domain,
+    requirements:req.body.requirements,
+    price:req.body.price,
+    rating:req.body.rating,
+    duration:req.body.duration,
+    date:req.body.date 
+})
+
+try{
+  const result = await course.save();
+  res.send(result)
+  }
+  catch(er){
+      console.log(er);
+  }
+
+})
+
+router.get('/getallCourses',async(req,res)=>{
+   const courses = await Course.aggregate([{ $sample: { size: 3 } }]);
+   res.send(courses)
+})
 
 router.get('/',(req,res)=>{
     console.log(projectId , ' and this is ',sessionId);
@@ -110,6 +140,8 @@ router.get('/getcurrentuser',async(req,res)=>{
   const result = await User.findById("60380e67e557ee5e0c8921f6")
   res.send(result);
 })
+
+
 router.post('/addmessage',async(req,res)=>{
 
 
@@ -166,7 +198,8 @@ router.post('/events',async (req,res)=>{
     $push : {
        messages :  {
                 "source": "bot",
-                "msg": result.fulfillmentMessages[0].text.text[0]
+                "msg": result.fulfillmentMessages[0].text.text[0],
+                "time":Date.now
               } //inserted data is the object to be inserted 
      }
    }
@@ -180,3 +213,55 @@ router.post('/events',async (req,res)=>{
 
  }    
 })
+
+
+router.post('/logout',async (req,res)=>{
+  
+  // The text query request.
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      event: {
+        // The query to send to the dialogflow agent
+        name: req.body.msg,
+        // The language used by the client (en-US)
+        languageCode: config.dialogFlowSessionLanguageCode,
+      },
+    },
+  };
+ try
+  {
+  // Send request and log result too
+  const responses = await sessionClient.detectIntent(request);
+  console.log('Detected intent');
+  const result = responses[0].queryResult;
+  console.log(`  Query: ${result.queryText}`);
+  console.log(`  Response: ${result.fulfillmentText}`);
+  BotAnswer = {
+    source : 'bot',
+    msg : result.fulfillmentMessages[0].text.text[0]
+  }
+  await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+  {
+    $push : {
+       messages :  {
+                "source": "bot",
+                "msg": result.fulfillmentMessages[0].text.text[0],
+                "time":Date.now
+              } //inserted data is the object to be inserted 
+     }
+   }
+  
+  );
+  
+  res.send(BotAnswer)
+ }
+ catch(err){
+     console.log('******************************************************************************** \n' , err);
+
+ }    
+})
+
+
+
+//add dates to other messages ;  

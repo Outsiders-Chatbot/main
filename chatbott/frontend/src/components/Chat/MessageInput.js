@@ -4,10 +4,46 @@ import styled from 'styled-components'
 import {addmessage,selectMessages} from '../../Redux/chatSlice'
 import { useDispatch , useSelector} from 'react-redux'
 import axios from '../../axios/axios'
+import MicNoneIcon from '@material-ui/icons/MicNone';
+import MicIcon from '@material-ui/icons/Mic';
+import Mic from '@material-ui/icons/Mic';
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+const recognition = new SpeechRecognition();
+
+recognition.continuous = true ;
+recognition.interimResults = true ;
+recognition.lang = 'en-US' ;
+recognition.maxAlternatives = 1 ;
+
+
 function MessageInput() {
    
     const [input, setInput] = useState("");
-    
+    const [Clicked, setClicked] = useState(true);
+
+    const clickMic = (e)=>{
+        e.preventDefault();
+        if(e.key === 'Enter'){
+            alert('enter');
+         }
+        setClicked(!Clicked)
+        console.log(Clicked);
+        if(Clicked){
+        recognition.start()
+        recognition.onresult = (e) => {
+            console.log(e.results[e.results.length -1][0].transcript);
+            setInput(e.results[e.results.length -1][0].transcript)
+        }
+        }
+        else
+        recognition.stop();
+        setInput("")
+    }
+
+  
+   
+
     const dispatch = useDispatch()
 
     const send =async (e) => {
@@ -29,6 +65,10 @@ function MessageInput() {
         <Container>
             <InputContainer>
                 <form>
+                    <RecordButton 
+                        onClick={clickMic}>
+                        {   Clicked?<MicNoneIcon/>:<MicIconStyled/>}    
+                    </RecordButton>
                     <input 
                         onChange={(e)=>setInput(e.target.value)}
                         type="text" 
@@ -73,6 +113,13 @@ const InputContainer = styled.div`
         }
     }
 `
+const RecordButton = styled.button`
+border : none ;
+background : transparent;
+    :focus{
+        outline : none;
+    }
+`
 
 const SendButton = styled.button`
     background: #ffffb3 ;
@@ -95,4 +142,7 @@ const SendButton = styled.button`
 
 const Send = styled(SendIcon)`
     color: #D9D9D9;
+`
+const MicIconStyled = styled(MicIcon)`
+    color: red;
 `

@@ -5,13 +5,13 @@ function Days() {
     return (
         <Container>
             <DaysOfWeek>
-            <ProgressBarWeek/>
-            <ProgressBarWeek/>
-            <ProgressBarWeek/>
-            <ProgressBarWeek/>
-            <ProgressBarWeek/>
-            <ProgressBarWeek/>
-            <ProgressBarWeek/>
+            <ProgressBarWeek percentage={80} name={"Sun"}/>
+            <ProgressBarWeek percentage={8} name={"Mon"}/>
+            <ProgressBarWeek percentage={30} name={"Tus"}/>
+            <ProgressBarWeek percentage={60} name={"Wen"}/>
+            <ProgressBarWeek percentage={80} name={"Thu"}/>
+            <ProgressBarWeek percentage={40} name={"Fri"}/>
+            <ProgressBarWeek percentage={50} name={"Sat"}/>
             </DaysOfWeek>
         </Container>
     )

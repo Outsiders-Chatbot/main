@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import Dialogs from './additionalstuff/Dialogs'
+import Dialogs from './additionalstuff/CourseDialog'
 import SnackSave from './additionalstuff/SnackSave'
 
 

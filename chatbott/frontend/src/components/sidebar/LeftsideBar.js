@@ -1,15 +1,30 @@
-
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Course from './Course'
 import SavedCourse from './SavedCourse'
-import SavedDialogs from './additionalstuff/SavedDialogs'
+import SavedDialogs from './additionalstuff/Dialogs'
+import {initialingData,fetchCourses,selectCourses} from '../../Redux/courseSlice'
+import { useDispatch , useSelector} from 'react-redux'
+
+
 function LeftsideBar() {
   const [open, setOpen] = React.useState(false);
       
     const handleClickOpen = () => {
       setOpen(true);
     };
+
+    const courses =  useSelector(selectCourses)
+
+    const  dispatch = useDispatch();
+    useEffect(() => {  
+            dispatch(fetchCourses())
+    }, [])
+
+    useEffect(() => {
+      console.log( courses );
+    },[courses])
+
     return (
         <Container>
             <Logo>
@@ -36,8 +51,7 @@ function LeftsideBar() {
 
             <RecommandedCourses>
                 <RecommandedCoursesBox>
-                <strong style={{fontFamily:'cursive'}}>Recommanded Courses :
-                  </strong>  
+                <strong style={{fontFamily:'cursive'}}>Recommanded Courses : </strong>  
                    <Course/>
                    <Course/>
                    <Course/>

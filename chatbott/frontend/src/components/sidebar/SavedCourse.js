@@ -1,15 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import Dialogs from './additionalstuff/Dialogs'
+import DeleteIcon from '@material-ui/icons/Delete';
+import DialogsSettings from './additionalstuff/SavedDialogs'
 import ProgressBar from './additionalstuff/ProgressBar';
+import SnackSave from './additionalstuff/SnackSave';
+import SnackDelete from './additionalstuff/SnackDelete';
 function SavedCourse() {
     const [open, setOpen] = React.useState(false);
       
     const handleClickOpen = () => {
       setOpen(true);
     };
+
+    
+    const [openSlack, setOpenSlack] = React.useState(false);
+    
+      const handleClick = () => {
+        setOpenSlack(true);
+      };
     return (<>
         <Container>
              <CourseAvatar>
@@ -24,11 +33,14 @@ function SavedCourse() {
                 <DetailButton onClick={()=>handleClickOpen()}>
                 <OpenInNewIcon className="detail"/>
                 </DetailButton>
-                
+               <DetailButton onClick={()=>handleClick()}>
+                <DeleteIcon className="delete"/>
+               </DetailButton>
                 </div>
             </Func>
         </Container>
-          <Dialogs open={open} setOpen={setOpen} />
+          <DialogsSettings open={open} setOpen={setOpen} />
+          <SnackDelete  openSlack={openSlack} setOpenSlack={setOpenSlack} />
           </>
     )
 }
@@ -87,6 +99,10 @@ align-items : center;
     .detail:hover{
         color : #fee103;
         cursor : pointer;
+    }
+    .delete:hover{
+        color:red;
+        cursor ; pointer;
     }
 
     

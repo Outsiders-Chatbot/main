@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 
-function SnackSave({openSlack ,setOpenSlack}) {
+function SnackDelete({openSlack ,setOpenSlack}) {
     function Alert(props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
       }
@@ -32,13 +32,13 @@ function SnackSave({openSlack ,setOpenSlack}) {
 
       return (
         <div className={classes.root}>
-          <Snackbar open={openSlack} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="success">
-              Course has been saved successfully !
+          <Snackbar open={openSlack} autoHideDuration={2000} onClose={handleClose}>
+          <Alert severity="error">
+              Course Deleted !
             </Alert>
           </Snackbar>
         </div>
       );
 }
 
-export default SnackSave
+export default SnackDelete
