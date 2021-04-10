@@ -12,11 +12,6 @@ function ChatMessage() {
     
     const messages =  useSelector(selectMessages)
 
-    useEffect(() => {
-      console.log( messages );
-    },[messages])
-
-
     return (
         <Container> 
             {

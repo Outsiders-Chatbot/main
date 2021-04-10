@@ -11,20 +11,6 @@ const config = require('../config/dev')
 
 const ServiceAccount = require('../authkey.json')
 
-// projectId: ID of the GCP project where Dialogflow agent is deployed
-// const projectId = 'PROJECT_ID';
-// sessionId: String representing a random number or hashed user identifier
-// const sessionId = '123456';
-// queries: A set of sequential queries to be send to Dialogflow agent for Intent Detection
-// const queries = [
-//   'Reserve a meeting room in Toronto office, there will be 5 of us',
-//   'Next monday at 3pm for 1 hour, please', // Tell the bot when the meeting is taking place
-//   'B'  // Rooms are defined on the Dialogflow agent, default options are A, B, or C
-// ]
-// languageCode: Indicates the language Dialogflow agent should use to detect intents
-// const languageCode = 'en';
-
-
 
 
 //getting the keys to use our api 
@@ -46,33 +32,7 @@ const sessionPath = sessionClient.projectAgentSessionPath(
   sessionId
 );
 
-router.post('/addCourse',async(req,res)=>{
-  const course = new Course({
-    title:req.body.title,
-    author:req.body.author,
-    description:req.body.description,
-    domain:req.body.domain,
-    requirements:req.body.requirements,
-    price:req.body.price,
-    rating:req.body.rating,
-    duration:req.body.duration,
-    date:req.body.date 
-})
 
-try{
-  const result = await course.save();
-  res.send(result)
-  }
-  catch(er){
-      console.log(er);
-  }
-
-})
-
-router.get('/getallCourses',async(req,res)=>{
-   const courses = await Course.aggregate([{ $sample: { size: 3 } }]);
-   res.send(courses)
-})
 
 router.get('/',(req,res)=>{
     console.log(projectId , ' and this is ',sessionId);
@@ -91,8 +51,8 @@ router.post('/',async (req,res)=>{
               } 
      }
    }
-  
   );
+  
   // The text query request.
   const request = {
     session: sessionPath,
@@ -142,29 +102,29 @@ router.get('/getcurrentuser',async(req,res)=>{
 })
 
 
-router.post('/addmessage',async(req,res)=>{
+// router.post('/addmessage',async(req,res)=>{
 
 
-try{
-  const result = await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
-  {
-    $push : {
-       messages :  {
-                "source": "user",
-                "msg": "timestamp",
-                "time":Date.now
-              } //inserted data is the object to be inserted 
-     }
-   }
+// try{
+//   const result = await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+//   {
+//     $push : {
+//        messages :  {
+//                 "source": "user",
+//                 "msg": "timestamp",
+//                 "time":Date.now
+//               } //inserted data is the object to be inserted 
+//      }
+//    }
   
-  );
+//   );
   
-  res.send(result)
-  }
-  catch(er){
-      console.log(er);
-  }
-})
+//   res.send(result)
+//   }
+//   catch(er){
+//       console.log(er);
+//   }
+// })
 
 
 router.post('/events',async (req,res)=>{

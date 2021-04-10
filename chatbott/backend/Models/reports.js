@@ -17,7 +17,7 @@ const courseSchenma = new mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: "user"
         },
-})
+})  
 
 const report = mongoose.model('report',courseSchenma)
 

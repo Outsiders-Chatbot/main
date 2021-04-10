@@ -3,7 +3,10 @@ const courseSchenma = new mongoose.Schema({
     salary : Number , 
     domain: { type : Array , "default" : ["default"] },
     requirements : { type : Array , "default" : ["default"] },
-    courses_id : { type : Array , "default" : ["default"] },
+    courses_id : [
+      { type: mongoose.Schema.Types.ObjectId,
+        ref: "course"
+      }],
     country : String ,
     duration : String ,
     entreprise : String,

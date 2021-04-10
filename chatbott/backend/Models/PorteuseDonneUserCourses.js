@@ -5,9 +5,9 @@ mongoose.connect('mongodb://localhost/PI')
 
 const courseSchenma = new mongoose.Schema({
     progress : Number ,
-    start_sub : Date ,
+    start_sub :{ type : Date , "default" : Date.now },
     end_sub : Date , 
-    courses_id: 
+    course_id: 
         { required: true,
           type: mongoose.Schema.Types.ObjectId,
           ref: "course"
@@ -23,4 +23,4 @@ const courseSchenma = new mongoose.Schema({
 
 const porteuseDonneUserCourses = mongoose.model('porteuseDonneUserCourses',courseSchenma)
 
-exports.PorteuseDonneUserCourses = porteuseDonneUserCourses;
+exports.PDUserCourses = porteuseDonneUserCourses;

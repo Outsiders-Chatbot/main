@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require('cors');
 const indexRouter = require("./routes/index");
+const courses = require("./routes/courses");
+
 
 const app = express();
 app.use(cors());
@@ -15,6 +17,8 @@ app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "build")));
 
 app.use("/", indexRouter);
+app.use("/courses", courses);
+
 app.get("*", (req, res) => {
   res.sendFile("build/index.html", { root: __dirname });
 });

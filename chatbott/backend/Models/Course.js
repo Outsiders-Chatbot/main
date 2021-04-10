@@ -25,7 +25,7 @@ const courseSchenma = new mongoose.Schema({
     jobs_id: [
             {
               type: mongoose.Schema.Types.ObjectId,
-              ref: "user"
+              ref: "job"
             }],
     duration : String //
 })

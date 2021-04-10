@@ -21,7 +21,7 @@ const courseSchenma = new mongoose.Schema({
     courses_id: [
         {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Course"
+          ref: "porteuseDonneUserCourses"
         }],
     quiz_id: [{
               type: mongoose.Schema.Types.ObjectId,
@@ -32,7 +32,12 @@ const courseSchenma = new mongoose.Schema({
     scenario_id:{ 
         type: mongoose.Schema.Types.ObjectId,
         ref: "scenario"
-        }
+        },
+    jobs_id:[
+        { type: mongoose.Schema.Types.ObjectId,
+          ref: "porteuseDonneJobsUser"
+         }],
+    
 
 
 })

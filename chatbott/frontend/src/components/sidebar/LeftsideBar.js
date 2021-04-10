@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useState } from 'react'
 import styled from 'styled-components'
 import Course from './Course'
 import SavedCourse from './SavedCourse'
 import SavedDialogs from './additionalstuff/Dialogs'
-import {initialingData,fetchCourses,selectCourses} from '../../Redux/courseSlice'
+import {fetchCourses,selectCourses} from '../../Redux/courseSlice'
+import {fetchSavedCourses,selectSavedCourses} from '../../Redux/savedcourseSlice'
+import  axios  from "../../axios/axios";
+
 import { useDispatch , useSelector} from 'react-redux'
 
 
@@ -14,19 +17,33 @@ function LeftsideBar() {
       setOpen(true);
     };
 
-    const courses =  useSelector(selectCourses)
+    
+    const courses =  useSelector(selectCourses);
+    const savedCourses = useSelector(selectSavedCourses);
+
+    const [savedIds, setsavedIds] = useState(['']);
+
+    useEffect(() => {
+      let copy = [...savedIds]
+      savedCourses.map( (item)=>{
+   
+        copy.push(item._id)
+      
+      } )
+      setsavedIds(copy)
+    }, [savedCourses])
 
     const  dispatch = useDispatch();
     useEffect(() => {  
             dispatch(fetchCourses())
+            dispatch(fetchSavedCourses())
     }, [])
 
-    useEffect(() => {
-      console.log( courses );
-    },[courses])
+    
 
     return (
         <Container>
+        
             <Logo>
                <Head>
                 <img src="/flashboticon.PNG"/>
@@ -40,24 +57,36 @@ function LeftsideBar() {
                 <Header>
                 <strong style={{fontFamily:'cursive'}}>Saved Courses :
                   </strong>  
-                  <SavedDialogs  open={open} setOpen={setOpen}/>
+                  <SavedDialogs savedCourses={savedCourses}  open={open} setOpen={setOpen}/>
                   <span onClick={()=>{handleClickOpen()}}>See all</span>
                 </Header>
+               
+                { 
+                  savedCourses.map( (course , index) =>{
+                 
+                    if(index >= 2) return
+                    return <SavedCourse key={index} course={course}/>
+                  } )
+                  }
               
-                <SavedCourse/>
-                <SavedCourse/>
               </SavedCoursesBox>
             </SavedCourses>
 
             <RecommandedCourses>
                 <RecommandedCoursesBox>
                 <strong style={{fontFamily:'cursive'}}>Recommanded Courses : </strong>  
-                   <Course/>
-                   <Course/>
-                   <Course/>
-                   <Course/>
-                   <Course/>
-                </RecommandedCoursesBox>
+                  {   
+                  courses.map( (course , index) =>{
+                    const val = savedIds.findIndex((item) => item._id === course._id);
+                    if (val === -1)
+                    { return <Course key={index} course={course}/>}
+                    else 
+                    return null;
+                  } )
+                  }
+              
+                  
+                   </RecommandedCoursesBox>
             </RecommandedCourses>
         </Container>
     )
