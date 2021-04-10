@@ -74,6 +74,7 @@ function Dialogs( {setOpen  , open , savedCourses}) {
                     return <SavedCourse key={index} course={course}/>
                   } )
                   }
+                  
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">

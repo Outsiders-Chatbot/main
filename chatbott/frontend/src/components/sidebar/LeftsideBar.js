@@ -77,11 +77,7 @@ function LeftsideBar() {
                 <strong style={{fontFamily:'cursive'}}>Recommanded Courses : </strong>  
                   {   
                   courses.map( (course , index) =>{
-                    const val = savedIds.findIndex((item) => item._id === course._id);
-                    if (val === -1)
-                    { return <Course key={index} course={course}/>}
-                    else 
-                    return null;
+                    return <Course key={index} course={course}/>
                   } )
                   }
               
@@ -93,6 +89,13 @@ function LeftsideBar() {
 }
 
 export default LeftsideBar
+
+// const val = savedIds.findIndex((item) => item._id === course._id);
+// if (val === -1)
+// { return <Course key={index} course={course}/>}
+// else 
+// return null;
+
 
 const Container = styled.div`
   width: 100%;

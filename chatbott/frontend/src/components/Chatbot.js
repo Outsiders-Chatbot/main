@@ -23,7 +23,6 @@ function Chatbot() {
        event().then( ()=>{
            console.log('done');
        } )
-       
     }, [])
     return (
         <div>

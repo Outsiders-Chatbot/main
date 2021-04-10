@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect ,useRef } from 'react'
 import styled from 'styled-components'
 import Botmessage from '../messages/Botmessage'
 import UserMessage from '../messages/UserMessage'
@@ -9,19 +9,35 @@ import { useDispatch , useSelector} from 'react-redux'
 
 
 function ChatMessage() {
+  const hope = useRef(null)
+
+useEffect(() => {
+
+
+  document.getElementById("msg").scrollTo({
+   top:hope.current.offsetTop,
+   behavior:'smooth'
+ })
+
+
+hope.current.scrollIntoView({ behavior:'smooth' })
+
+
+}, [messages])
     
     const messages =  useSelector(selectMessages)
 
     return (
-        <Container> 
+        <Container id="msg" > 
+        
             {
                 messages.map( (message,index) =>{
                   return message.source==='bot'?
-                  <Botmessage key={index} message={message}/> :
+                  <Botmessage  key={index} message={message}/> :
                     <UserMessage key={index} message={message}/>
                 } )
             }
-        
+            <div ref={hope}></div>
         </Container>
     )
 }
@@ -33,6 +49,8 @@ padding : 10px;
 width: 100%;
 height: 100%;
 padding :20px;
+overflow-y:auto;
+
 overflow-y : auto;
 /* width */
 ::-webkit-scrollbar {
