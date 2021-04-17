@@ -5,22 +5,25 @@ mongoose.connect('mongodb://localhost/PI')
 
 const courseSchenma = new mongoose.Schema({
     progress : Number ,
-    start_sub : Date ,
-    end_sub : Date , 
-    courses_id: 
+    state : {
+        type: String,
+        enum : ['done','Not_done'],
+        default: 'Not_done'
+    },
+    scenario_id: 
         { required: true,
           type: mongoose.Schema.Types.ObjectId,
-          ref: "course"
+          ref: "scenario"
         },
-    jobs_id:
+    user_id:
         { required: true,
           type: mongoose.Schema.Types.ObjectId,
-          ref: "job"
+          ref: "user"
         },
 
 
 })
 
-const porteuseDonneJobsUser = mongoose.model('porteuseDonneJobsUser',courseSchenma)
+const porteuseDonneScenarioUser = mongoose.model('porteuseDonneScenarioUser',courseSchenma)
 
-exports.PDUserJob = porteuseDonneJobsUser;
+exports.PDUserScenario = porteuseDonneScenarioUser;

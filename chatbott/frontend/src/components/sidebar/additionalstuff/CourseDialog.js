@@ -14,7 +14,7 @@ import Rating from '@material-ui/lab/Rating';
 import LanguageIcon from '@material-ui/icons/Language';
 import PublishIcon from '@material-ui/icons/Publish';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-function CourseDialog({setOpen  , open}) {
+function CourseDialog({setOpen  , open , course}) {
     
     const styles = (theme) => ({
         root: {
@@ -66,28 +66,23 @@ function CourseDialog({setOpen  , open}) {
          
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Course title
+          Course Details
         </DialogTitle>
         <DialogContent dividers>
           <Container>
            
-            <h1>Course titletitletitletit</h1>
-            <h6>lorem lorem lorem lorem lorem lorem orem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem </h6>
+            <h1>{course.title}</h1>
+            <h6>{course.description}</h6>
             <Ratingdiv>
-            <div className="rakah" style={{fontWeight:"bold"}}>3</div> <div><Rating value={3.2}/></div> 
+            <div className="rakah" style={{fontWeight:"bold"}}>{course.rating}</div> <div><Rating value={course.rating}/></div> 
               </Ratingdiv> 
-            <div>Created by <span style={{color:"#00CED1" ,textDecoration: "underline",marginTop:"10px"}}> author name</span></div>
-            <div style={{display:'flex' , justifyContent:"space-between" , width:"100px",marginTop:"10px"}}>
-              <LanguageIcon style={{ marginRight:"5px"}}/> Language <PublishIcon style={{ marginLeft:"10px", marginRight:"5px"}}/> 12/12/2020 <AccessTimeIcon style={{ marginLeft:"10px" , marginRight:"5px"}}/> 8h30min </div>
-           <div style={{marginTop:"10px"}}> <strong>Requirements :</strong> requirements of our app  </div>
+            <div>Created by <span style={{color:"#00CED1" ,textDecoration: "underline",marginTop:"10px"}}>{course.author}</span></div>
+            <div style={{display:'flex' , justifyContent:"space-between",whiteSpace:'nowrap' , width:"100px",marginTop:"10px"}}>
+              <LanguageIcon style={{ marginRight:"5px"}}/> {course.language?`${course.language}`:'EN-US'} <PublishIcon style={{ marginLeft:"10px", marginRight:"5px"}}/> {course.date?`${course.date}`.substr(0,10):'NaN'}  <AccessTimeIcon style={{ marginLeft:"10px" , marginRight:"5px"}}/>{course.duration?`${course.duration}`:'NaN'} </div>
+           <div style={{marginTop:"10px"}}> <strong>Requirements knowledge :</strong>{course.requirements.map( (item)=>{return <span style={{fontFamily:'sans-serif',fontStyle:'oblique'}}> {item} </span>} )  }  </div>
           </Container>
   
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Save changes
-          </Button>
-        </DialogActions>
       </Dialog>
         </div>
     )

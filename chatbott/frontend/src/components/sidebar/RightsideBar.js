@@ -10,12 +10,13 @@ import ProfileNotif from '../ProfileNotif';
 import './CSS/UserProfile.css';
 import Button from '@material-ui/core/Button';
 
-
+import {fetchScenario,selectScenario} from '../../Redux/stepsSlice'
+import { useDispatch , useSelector} from 'react-redux'
 
 
 function RightsideBar() {
   const [openReport, setOpenReport] = React.useState(false);
-
+  const dispatch = useDispatch();
   const handleClickOpenReport = () => {
     setOpenReport(true);
   };
@@ -25,6 +26,10 @@ function RightsideBar() {
     const handleClickOpen = () => {
       setOpen(true);
     };
+    React.useEffect(() => {
+      dispatch(fetchScenario());
+      console.log('disaptched scenario');
+    }, [])
 
     return (
        

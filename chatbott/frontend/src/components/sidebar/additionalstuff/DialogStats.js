@@ -10,8 +10,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Timeline from './Timeline'
 
+
 function DialogStats({setOpen  , open})  {   
-    
+
     const styles = (theme) => ({
     root: {
       margin: 0,
@@ -58,9 +59,9 @@ function DialogStats({setOpen  , open})  {
       console.log(open);
     };
 
+   
 return (
     <div>
-     
   <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
     <DialogContent dividers>
       <Timeline/>

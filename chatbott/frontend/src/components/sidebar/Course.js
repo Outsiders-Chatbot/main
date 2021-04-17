@@ -18,7 +18,7 @@ function Course({course}) {
     const [openSlack, setOpenSlack] = React.useState(false);
     
       const handleClick = () => {
-    //dispatch(DeleteTheSavedCourse(course))
+      //  dispatch(DeleteTheSavedCourse(course))
         axios.post('courses/addSavedCourse', {
             course_id : course._id
         }).then((save)=>{console.log(save)
@@ -54,7 +54,7 @@ function Course({course}) {
                 </div>
             </Func>
         </Container>
-        <Dialogs open={open} setOpen={setOpen} />
+        <Dialogs course={course} open={open} setOpen={setOpen} />
         <SnackSave  openSlack={openSlack} setOpenSlack={setOpenSlack} />
         
         </>)

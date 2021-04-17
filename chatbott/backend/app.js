@@ -7,6 +7,10 @@ const cors = require('cors');
 const indexRouter = require("./routes/index");
 const courses = require("./routes/courses");
 const report = require("./routes/report");
+const auth = require("./routes/auth");
+const register = require("./routes/register")
+const scenario = require("./routes/scenario")
+
 
 
 
@@ -21,6 +25,10 @@ app.use(express.static(path.resolve(__dirname, "build")));
 app.use("/", indexRouter);
 app.use("/courses", courses);
 app.use("/report", report);
+app.use("/auth", auth);
+app.use("/register",register)
+app.use("/scenario",scenario)
+
 
 
 app.get("*", (req, res) => {

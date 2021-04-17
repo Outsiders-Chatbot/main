@@ -1,46 +1,26 @@
 import React from 'react'
-
+import {fetchScenario,selectScenario} from '../../../Redux/stepsSlice'
+import { useDispatch , useSelector} from 'react-redux'
 import { Chrono } from "react-chrono";
 function Timeline() {
-    const items = [{
-        title: "May 1940",
-        contentTitle: "Dunkirk",
-        contentText:"Men of the British Expeditionary Force (BEF) wade out to a destroyer during the evacuation from Dunkirk.",
-        contentDetailedText: "On 10 May 1940, Hitler began his long-awaited offensive in the west...",
-      },{
-        title: "May 1940",
-        contentTitle: "Dunkirk",
-        contentText:"Men of the British Expeditionary Force (BEF) wade out to a destroyer during the evacuation from Dunkirk.",
-        contentDetailedText: "On 10 May 1940, Hitler began his long-awaited offensive in the west...",
-      },{
-        title: "May 1940",
-        contentTitle: "Dunkirk",
-        contentText:"Men of the British Expeditionary Force (BEF) wade out to a destroyer during the evacuation from Dunkirk.",
-        contentDetailedText: "On 10 May 1940, Hitler began his long-awaited offensive in the west...",
-      },
-      {
-        title: "May 1940",
-        contentTitle: "Dunkirk",
-        contentText:"Men of the British Expeditionary Force (BEF) wade out to a destroyer during the evacuation from Dunkirk.",
-        contentDetailedText: "On 10 May 1940, Hitler began his long-awaited offensive in the west...",
-      },
-      {
-        title: "May 1940",
-        contentTitle: "Dunkirk",
-        contentText:"Men of the British Expeditionary Force (BEF) wade out to a destroyer during the evacuation from Dunkirk.",
-        contentDetailedText: "On 10 May 1940, Hitler began his long-awaited offensive in the west...",
-      },
-      {
-        title: "May 1940",
-        contentTitle: "Dunkirk",
-        contentText:"Men of the British Expeditionary Force (BEF) wade out to a destroyer during the evacuation from Dunkirk.",
-        contentDetailedText: "On 10 May 1940, Hitler began his long-awaited offensive in the west...",
-      }];
+  const scenario =  useSelector(selectScenario);      
+    
     return (
         <div>
+          {console.log('scenario.scenario_id',scenario)}
             <div style={{ width: "500px", height: "500px" ,display:'block'}}>
-             <Chrono items={items} mode="VERTICAL"/>
+            {scenario ? <Chrono  mode="VERTICAL">
+            {
+               scenario.scenario_id.steps.map( (index ,step)=>{
+                 return  <div key={index}>
+                   <p>Lorem Ipsum. Lorem Ipsum. Lorem Ipsum</p>
+                 </div>           
+               })
+             }
+              
+            </Chrono> :  <div>null</div>}
         </div>
+        
         </div>
     )
 }

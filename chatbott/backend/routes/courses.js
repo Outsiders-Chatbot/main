@@ -17,7 +17,8 @@ router.post('/add',async(req,res)=>{
       price:req.body.price,
       rating:req.body.rating,
       duration:req.body.duration,
-      date:req.body.date 
+      date:req.body.date,
+      language:req.body.language
   })
   
   try{

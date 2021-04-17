@@ -31,7 +31,7 @@ const courseSchenma = new mongoose.Schema({
     level : String ,
     scenario_id:{ 
         type: mongoose.Schema.Types.ObjectId,
-        ref: "scenario"
+        ref: "porteuseDonneScenarioUser"
         },
     jobs_id:[
         { type: mongoose.Schema.Types.ObjectId,

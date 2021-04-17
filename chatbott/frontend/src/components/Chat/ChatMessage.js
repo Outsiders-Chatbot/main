@@ -6,6 +6,7 @@ import UserMessage from '../messages/UserMessage'
 
 import {addmessage,selectMessages} from '../../Redux/chatSlice'
 import { useDispatch , useSelector} from 'react-redux'
+import Suggests from '../Suggests'
 
 
 function ChatMessage() {
@@ -13,7 +14,7 @@ function ChatMessage() {
 
 useEffect(() => {
 
-
+  console.log('messages.length',messages);
   document.getElementById("msg").scrollTo({
    top:hope.current.offsetTop,
    behavior:'smooth'
@@ -29,14 +30,20 @@ hope.current.scrollIntoView({ behavior:'smooth' })
 
     return (
         <Container id="msg" > 
-        
-            {
+        {messages.length==0 ? <Suggests /> :
+         messages.map( (message,index) =>{
+          return message.source==='bot'?
+          <Botmessage  key={index} message={message}/> :
+            <UserMessage key={index} message={message}/>
+        } )
+      }
+            {/* {
                 messages.map( (message,index) =>{
                   return message.source==='bot'?
                   <Botmessage  key={index} message={message}/> :
                     <UserMessage key={index} message={message}/>
                 } )
-            }
+            } */}
             <div ref={hope}></div>
         </Container>
     )

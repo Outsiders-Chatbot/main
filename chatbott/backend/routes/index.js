@@ -128,50 +128,102 @@ router.get('/getcurrentuser',async(req,res)=>{
 
 
 router.post('/events',async (req,res)=>{
-  
-  // The text query request.
-  const request = {
-    session: sessionPath,
-    queryInput: {
-      event: {
-        // The query to send to the dialogflow agent
-        name: req.body.msg,
-        // The language used by the client (en-US)
-        languageCode: config.dialogFlowSessionLanguageCode,
-      },
-    },
-  };
- try
-  {
-  // Send request and log result too
-  const responses = await sessionClient.detectIntent(request);
-  console.log('Detected intent');
-  const result = responses[0].queryResult;
-  console.log(`  Query: ${result.queryText}`);
-  console.log(`  Response: ${result.fulfillmentText}`);
-  BotAnswer = {
-    source : 'bot',
-    msg : result.fulfillmentMessages[0].text.text[0]
-  }
-  await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
-  {
-    $push : {
-       messages :  {
-                "source": "bot",
-                "msg": result.fulfillmentMessages[0].text.text[0],
-                "time":Date.now
-              } //inserted data is the object to be inserted 
-     }
-   }
-  
-  );
-  
-  res.send(BotAnswer)
- }
- catch(err){
-     console.log('******************************************************************************** \n' , err);
+  const user =await User.findById("60380e67e557ee5e0c8921f6");
+  if(user.messages.length!=0){
 
- }    
+    // The text query request.
+    const request = {
+      session: sessionPath,
+      queryInput: {
+        event: {
+          // The query to send to the dialogflow agent
+          name: req.body.msg,
+          // The language used by the client (en-US)
+          languageCode: config.dialogFlowSessionLanguageCode,
+        },
+      },
+    };
+    try
+    {
+      // Send request and log result too
+      const responses = await sessionClient.detectIntent(request);
+      console.log('Detected intent');
+      const result = responses[0].queryResult;
+      console.log(`  Query: ${result.queryText}`);
+      console.log(`  Response: ${result.fulfillmentText}`);
+      BotAnswer = {
+        source : 'bot',
+        msg : result.fulfillmentMessages[0].text.text[0]
+      }
+      await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+      {
+        $push : {
+          messages :  {
+            "source": "bot",
+            "msg": result.fulfillmentMessages[0].text.text[0],
+            "time":Date.now
+          } //inserted data is the object to be inserted 
+        }
+      }
+      
+      );
+      
+      res.send(BotAnswer)
+    }
+    catch(err){
+      console.log('******************************************************************************** \n' , err);
+      
+    }    
+  }
+})
+
+
+router.post('/selectedscenario',async (req,res)=>{
+
+    // The text query request.
+    const request = {
+      session: sessionPath,
+      queryInput: {
+        event: {
+          // The query to send to the dialogflow agent
+          name: req.body.msg,
+          // The language used by the client (en-US)
+          languageCode: config.dialogFlowSessionLanguageCode,
+        },
+      },
+    };
+    try
+    {
+      // Send request and log result too
+      const responses = await sessionClient.detectIntent(request);
+      console.log('Detected intent');
+      const result = responses[0].queryResult;
+      console.log(`  Query: ${result.queryText}`);
+      console.log(`  Response: ${result.fulfillmentText}`);
+      BotAnswer = {
+        source : 'bot',
+        msg : result.fulfillmentMessages[0].text.text[0]
+      }
+      await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+      {
+        $push : {
+          messages :  {
+            "source": "bot",
+            "msg": result.fulfillmentMessages[0].text.text[0],
+            "time":Date.now
+          } //inserted data is the object to be inserted 
+        }
+      }
+      
+     );
+      
+      res.send(BotAnswer)
+    }
+    catch(err){
+      console.log('******************************************************************************** \n' , err);
+      
+    }    
+  
 })
 
 

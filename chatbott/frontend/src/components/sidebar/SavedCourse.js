@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import DeleteIcon from '@material-ui/icons/Delete';
-import DialogsSettings from './additionalstuff/SavedDialogs'
+import SavedDialogs from './additionalstuff/SavedDialogs'
 import ProgressBar from './additionalstuff/ProgressBar';
 import SnackSave from './additionalstuff/SnackSave';
 import SnackDelete from './additionalstuff/SnackDelete';
@@ -50,7 +50,7 @@ function SavedCourse({course}) {
                 </div>
             </Func>
         </Container>
-          <DialogsSettings open={open} setOpen={setOpen} />
+          <SavedDialogs course={course} open={open} setOpen={setOpen} />
           <SnackDelete  openSlack={openSlack} setOpenSlack={setOpenSlack} />
           </>
     )
