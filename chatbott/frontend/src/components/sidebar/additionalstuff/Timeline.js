@@ -9,7 +9,7 @@ function Timeline() {
         <div>
           {console.log('scenario.scenario_id',scenario)}
             <div style={{ width: "500px", height: "500px" ,display:'block'}}>
-            {scenario ? <Chrono  mode="VERTICAL">
+            {scenario ? <Chrono mode="VERTICAL">
             {
                scenario.scenario_id.steps.map( (index ,step)=>{
                  return  <div key={index}>

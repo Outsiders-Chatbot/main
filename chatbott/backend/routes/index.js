@@ -209,7 +209,7 @@ router.post('/selectedscenario',async (req,res)=>{
         $push : {
           messages :  {
             "source": "bot",
-            "msg": result.fulfillmentMessages[0].text.text[0],
+            "msg": 'you have choosed your scenario here ',
             "time":Date.now
           } //inserted data is the object to be inserted 
         }

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import axios from '../axios/axios'
 import {fetchScenario,selectScenario} from '../Redux/stepsSlice'
 import { useDispatch , useSelector} from 'react-redux'
+import {addmessage,fetchMessages} from '../Redux/chatSlice'
 
 function Suggests() {
     const dispatch = useDispatch();
@@ -17,6 +18,14 @@ function Suggests() {
         )
             dispatch(fetchScenario())
             console.log('disaptched scenario');
+
+            const eventmsg = {
+                source : 'event',
+                msg : 'selectedscenario'
+            }
+        const BotAnswer = await axios.post('/selectedscenario',eventmsg)
+            console.log(BotAnswer.data);
+            dispatch(addmessage(BotAnswer.data));
     }
     const chooseSenario2 = async () =>{
         const scenario1 = {
@@ -27,6 +36,15 @@ function Suggests() {
         )
         dispatch(fetchScenario())
         console.log('disaptched scenario');
+
+        
+        const eventmsg = {
+            source : 'event',
+            msg : 'selectedscenario'
+        }
+    const BotAnswer = await axios.post('/selectedscenario',eventmsg)
+        console.log(BotAnswer.data);
+        dispatch(addmessage(BotAnswer.data));
     }
     return (
         <Container>

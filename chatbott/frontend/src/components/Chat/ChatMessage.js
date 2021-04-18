@@ -5,6 +5,8 @@ import UserMessage from '../messages/UserMessage'
 
 
 import {addmessage,selectMessages} from '../../Redux/chatSlice'
+import {selectScenario} from '../../Redux/stepsSlice'
+
 import { useDispatch , useSelector} from 'react-redux'
 import Suggests from '../Suggests'
 
@@ -25,19 +27,22 @@ hope.current.scrollIntoView({ behavior:'smooth' })
 
 
 }, [messages])
-    
+
+    const scenario =  useSelector(selectScenario);      
+
     const messages =  useSelector(selectMessages)
 
     return (
         <Container id="msg" > 
-        {messages.length==0 ? <Suggests /> :
+        {(scenario) ? 
          messages.map( (message,index) =>{
           return message.source==='bot'?
           <Botmessage  key={index} message={message}/> :
             <UserMessage key={index} message={message}/>
-        } )
+        } ) : <Suggests /> 
       }
             {/* {
+              (scenario && messages.length == 0)
                 messages.map( (message,index) =>{
                   return message.source==='bot'?
                   <Botmessage  key={index} message={message}/> :

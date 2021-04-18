@@ -3,9 +3,16 @@ import LeftsideBar from "../components/sidebar/LeftsideBar";
 import Chatbot from "../components/Chatbot";
 import RightsideBar from "../components/sidebar/RightsideBar";
 import styled from 'styled-components'
-
+import { useDispatch , useSelector} from 'react-redux'
+import {addmessage,fetchMessages} from '../Redux/chatSlice'
 
 function Welcome() {
+  const dispatch = useDispatch();
+
+React.useEffect(() => {
+  dispatch(fetchMessages())
+}, [])
+  
     return (
         <Container>
                 <LeftsideBar/>
