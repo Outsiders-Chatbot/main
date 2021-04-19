@@ -11,6 +11,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import StepDetails from './StepDetails';
 import axios from '../../../axios/axios'
+import {addmessage,selectMessages} from '../../../Redux/chatSlice'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,10 +32,14 @@ const useStyles = makeStyles((theme) => ({
 
 function Timeline() {
   const dispatch = useDispatch();
-
+  const [doneSenario, setdoneSenario] = React.useState(0)
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const scenario =  useSelector(selectScenario);      
+  const scenario =  useSelector(selectScenario); 
+  React.useEffect(() => {
+    
+  }, [doneSenario])
+  
   React.useEffect(() => {
     const fetchdata = async ()=> {const result = await axios.get('/scenario/selectedScenarioByuserId')
     console.log('result data :p ',result.data.progress);
@@ -58,8 +64,20 @@ x();
   
   const handleNext = () => {
     //Await ! ! !
-   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
+  setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  if(activeStep === scenario.scenario_id.steps.length - 1) {
+    console.log('in the end of the day everything is gonna be alright & if its not , its not')
+    console.log('trigger an event**************');
+    const triggerEvent = {
+      msg : 'DoneScenarioNewOne'
+    }
+    axios.post('/changescenarioEvent',triggerEvent).then((result)=>{
+      console.log(result.data);
+      dispatch(addmessage(result.data));
+    })
+    //We will trigger an event to ask our user to choose another scenario !! then based on his answer we will change it in the backend a
+    // and send him a message that we did it x
+  }
   };
 
   const handleBack = () => {
@@ -71,7 +89,7 @@ x();
   };
     return (
         <div>
-          {console.log('scenario.scenario_id',!scenario)}
+          {console.log('scenario this is ',!scenario)}
           <div >
             { !scenario  ?  <div>null</div> :
                 (
@@ -107,9 +125,9 @@ x();
                   </Step>
                 ))}
               </Stepper>
-             { (activeStep === scenario.scenario_id.steps.length) && (
+             {/* { (activeStep === scenario.scenario_id.steps.length) && (
                 console.log('in the end of the day everything is gonna be alright & if its not , its not')
-              )}
+              )} */}
               </> )
             }
        
