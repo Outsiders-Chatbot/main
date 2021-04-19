@@ -103,3 +103,24 @@ router.get('/selectedScenarioByuserId', async (req,res)=>{
       res.send(result)
     
 })
+
+router.post('/updateProgress', async (req,res)=>{
+    const user = await User.findById("60380e67e557ee5e0c8921f6")
+
+    const result = await PDUserScenario.findByIdAndUpdate(user.scenario_id,
+    {
+        $set : {
+            progress : req.body.activeStep 
+        }
+    } , {new: true}
+
+);
+
+try{
+    const response = await result.save();
+    res.send(response)
+    }
+    catch(er){
+        console.log(er);
+    }
+})

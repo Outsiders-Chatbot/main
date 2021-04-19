@@ -39,19 +39,19 @@ router.get('/',(req,res)=>{
     res.send('hellow')
 })
 
-
+//commented the user and bot saving messaging into db 
 router.post('/',async (req,res)=>{
   //find the user from the data base : test purpose , we will delete this later cuz its not the best practice
-  await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
-  {
-    $push : {
-       messages :  {
-                "source": "user",
-                "msg": req.body.msg
-              } 
-     }
-   }
-  );
+  // await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+  // {
+  //   $push : {
+  //      messages :  {
+  //               "source": "user",
+  //               "msg": req.body.msg
+  //             } 
+  //    }
+  //  }
+  // );
   
   // The text query request.
   const request = {
@@ -73,21 +73,29 @@ router.post('/',async (req,res)=>{
   const result = responses[0].queryResult;
   console.log(`  Query: ${result.queryText}`);
   console.log(`  Response: ${result.fulfillmentText}`);
+    if(result.fulfillmentMessages[0].text.text[0]=='job' || result.fulfillmentMessages[0].text.text[0]=='course'){
+      BotAnswer = {
+        source : 'bot',
+        msg : `i changed your scenario to ${result.fulfillmentMessages[0].text.text[0]} , check your new path :) `
+      }
+      //here we gonna set his scenario then answer the user
+      res.send(BotAnswer)
+    }
+
   BotAnswer = {
     source : 'bot',
     msg : result.fulfillmentMessages[0].text.text[0]
   }
-  await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
-  {
-    $push : {
-       messages :  {
-                "source": "bot",
-                "msg": result.fulfillmentMessages[0].text.text[0]
-              } //inserted data is the object to be inserted 
-     }
-   }
-  
-  );
+  // await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+  // {
+  //   $push : {
+  //      messages :  {
+  //               "source": "bot",
+  //               "msg": result.fulfillmentMessages[0].text.text[0]
+  //             } //inserted data is the object to be inserted 
+  //    }
+  //  }
+  // );
   res.send(BotAnswer)
  }
  catch(err){
