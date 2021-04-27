@@ -64,12 +64,13 @@ function MessageInput() {
    
     return (
         <Container>
-            <RecordButton 
+          
+            <InputContainer>
+                <form>
+                <RecordButton 
                         onClick={clickMic}>
                         {   Clicked?<MicNoneIcon/>:<MicIconStyled/>}    
             </RecordButton>
-            <InputContainer>
-                <form>
                     <input 
                         onChange={(e)=>setInput(e.target.value)}
                         type="text" 

@@ -22,12 +22,12 @@ function Introduction() {
           <TwoWays>
           <Statics onClick={()=>gotoregister()}>
                 <StaticBox> 
-                i got five on it RGISTER 
+                Register phase from this way
                 </StaticBox>
             </Statics>
             <Statics onClick={()=>gotoauth()}>
                 <StaticBox> 
-                i got five on it  
+                Authentification phase
                 </StaticBox>
             </Statics>
           </TwoWays>

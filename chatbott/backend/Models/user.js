@@ -4,7 +4,7 @@ mongoose.connect('mongodb://localhost/PI')
 .catch( (er)=> console.log(er) )
 
 const courseSchenma = new mongoose.Schema({
-    name: String ,
+    username: String ,
     password : String , 
     email:{
         type:String,

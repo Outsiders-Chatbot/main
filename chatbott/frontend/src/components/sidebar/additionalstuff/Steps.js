@@ -13,10 +13,10 @@ function Steps({activeStep}) {
                     <StepLabel>Welcome</StepLabel>
                 </Step>
                 <Step>
-                    <StepLabel>Register faze</StepLabel>
+                    <StepLabel>Register phase</StepLabel>
                 </Step>
                 <Step>
-                    <StepLabel>Authentification faze</StepLabel>
+                    <StepLabel>Authentification phase</StepLabel>
                 </Step>
             </Stepper>
         </Container>

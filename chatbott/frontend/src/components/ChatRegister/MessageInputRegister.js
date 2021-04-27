@@ -97,10 +97,10 @@ function MessageInputRegister() {
                     msg : 'Dont forget to verify your email :p'
                 }
                 dispatch(addmessage(botmsgEmail))
-            }, 3700);
+            }, 4700);
             setTimeout(() => {
                 history.push('/auth')
-            }, 5000);
+            }, 8000);
         
         }
             

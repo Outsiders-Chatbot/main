@@ -15,9 +15,9 @@ router.get('/',(req,res)=>{
 })
 // /register
 router.post('/saveUser', async(req,res)=>{
-   
+   console.log(req.body);
     const user = new User({
-        name:req.body.name,
+        username:req.body.username,
         password:req.body.password,
         email:req.body.email,
        // isAdmin :req.body.isAdmin,

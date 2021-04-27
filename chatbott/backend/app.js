@@ -10,6 +10,8 @@ const report = require("./routes/report");
 const auth = require("./routes/auth");
 const register = require("./routes/register")
 const scenario = require("./routes/scenario")
+const userss = require("./routes/user")
+
 
 
 
@@ -27,7 +29,9 @@ app.use("/report", report);
 app.use("/auth", auth);
 app.use("/register",register)
 app.use("/scenario",scenario)
+app.use("/user", userss);
 app.use("/", indexRouter);
+
 
 
 
