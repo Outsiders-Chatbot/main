@@ -4,9 +4,10 @@ import styled from 'styled-components'
 import axios from '../../axios/axios'
 import { useHistory } from "react-router-dom";
 import MicIcon from '@material-ui/icons/Mic';
-
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import {addmessage} from '../../Redux/chatRegisterSlice'
 import { useDispatch} from 'react-redux'
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
 function MessageInputRegister() {
     const dispatch = useDispatch();
@@ -69,7 +70,7 @@ function MessageInputRegister() {
         }
         dispatch(addmessage(usermsgPassword))
         setRequest({
-            ...Request,[name]:input
+            ...Request,'password':input
         })
         setInput("")
         console.log('final erquest',Request);
@@ -106,6 +107,7 @@ function MessageInputRegister() {
         }, [Request])
 
 
+        const [Notification, setNotification] = React.useState(true);
 
    
    
@@ -114,11 +116,25 @@ function MessageInputRegister() {
             <InputContainer>
                 <form>
                     <input 
-                        onChange={(e)=>setInput(e.target.value)}
+                        onChange={(e)=>{setInput(e.target.value)
+                        console.log(fields);
+                        }
+                        }
                         type={`${fields}`}
                         value={input}
                         name={`${name}`}
                         placeholder="Message here..." />
+                        {
+                            name=='password'&& (
+                            Notification ? <VisibilityOffOutlinedIcon onClick={
+                                ()=>{ setfields('text') 
+                                     setNotification((olddata)=>!olddata); 
+                                    console.log(fields);
+                                    }} /> : <VisibilityOutlinedIcon  onClick={
+                                        ()=>{ setfields('text') 
+                                        setfields('password')
+                                             setNotification((olddata)=>!olddata);   }} />)
+                        }
                     <SendButton 
                         type="submit"
                         onClick={send}>

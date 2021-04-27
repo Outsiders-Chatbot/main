@@ -18,7 +18,7 @@ function Course({course}) {
     const [openSlack, setOpenSlack] = React.useState(false);
     
       const handleClick = () => {
-      //  dispatch(DeleteTheSavedCourse(course))
+        dispatch(DeleteTheSavedCourse(course))
         axios.post('courses/addSavedCourse', {
             course_id : course._id
         }).then((save)=>{console.log(save)

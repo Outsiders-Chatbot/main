@@ -17,7 +17,7 @@ const courseSchenma = new mongoose.Schema({
     },
     isValid: Boolean,
     messages: { type : Array , "default" : [] },
-    intrests: { type : Array , "default" : [] },
+    intrest: String,
     courses_id: [
         {
           type: mongoose.Schema.Types.ObjectId,

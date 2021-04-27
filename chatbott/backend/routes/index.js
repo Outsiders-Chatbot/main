@@ -4,14 +4,17 @@ module.exports = router;
 
 const {User} = require('../Models/user')
 const {Course} = require('../Models/Course')
+const {PDUserScenario} = require('../Models/PorteuseDonneScenarioUser')
+const {Scenario} = require('../Models/scenario')
 
+const {auth} = require('../Middlwares/middlewareAUTH');
 
 const uuid = require('uuid');
 const config = require('../config/dev')
 
 const ServiceAccount = require('../authkey.json')
 
-
+router.use(auth)
 
 //getting the keys to use our api 
 const projectId = config.googleProjectID
@@ -58,7 +61,7 @@ router.post('/changescenarioEvent',async (req,res)=>{
     source : 'bot',
     msg : result.fulfillmentMessages[0].text.text[0]
   }
-  await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+  await User.findByIdAndUpdate(req.user._id ,
   {
     $push : {
        messages :  {
@@ -88,7 +91,7 @@ router.get('/',(req,res)=>{
 //commented the user and bot saving messaging into db 
 router.post('/',async (req,res)=>{
   //find the user from the data base : test purpose , we will delete this later cuz its not the best practice
-  await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+  await User.findByIdAndUpdate(req.user._id ,
   {
     $push : {
        messages :  {
@@ -124,6 +127,63 @@ router.post('/',async (req,res)=>{
         source : 'bot',
         msg : `i changed your scenario to ${result.fulfillmentMessages[0].text.text[0]} , check your new path :) `
       }
+
+      if(result.fulfillmentMessages[0].text.text[0]=='job'){
+        const pDUserScenario = new PDUserScenario({
+          progress : 0 ,
+          scenario_id : "6079b194c8963e343492bc27" ,
+          user_id : req.user._id
+      
+      } )
+      const result2 = await pDUserScenario.save();
+      const user = await User.findByIdAndUpdate(req.user._id,
+      {
+          $set : {
+              scenario_id : result2._id 
+           }
+         }
+      
+      )
+      
+      const scenarioo = await Scenario.findByIdAndUpdate("6079b194c8963e343492bc27",
+      {
+          $push : {
+              user_id : result2._id 
+           }
+         }
+      )
+      const result3 =await scenarioo.save();
+      const result = await user.save();
+      }
+
+      if(result.fulfillmentMessages[0].text.text[0]=='course'){
+        const pDUserScenario = new PDUserScenario({
+          progress : 0 ,
+          scenario_id : "6079b5d5abf55524d88bf15f" ,
+          user_id : req.user._id
+      
+      } )
+      const result2 = await pDUserScenario.save();
+      const user = await User.findByIdAndUpdate(req.user._id,
+      {
+          $set : {
+              scenario_id : result2._id 
+           }
+         }
+      
+      )
+      
+      const scenarioo = await Scenario.findByIdAndUpdate("6079b5d5abf55524d88bf15f",
+      {
+          $push : {
+              user_id : result2._id 
+           }
+         }
+      )
+      const result3 =await scenarioo.save();
+      const result = await user.save();
+      }
+
       //here we gonna set his scenario then answer the user
       res.send(BotAnswer)
     }
@@ -132,7 +192,7 @@ router.post('/',async (req,res)=>{
           source : 'bot',
           msg : result.fulfillmentMessages[0].text.text[0]
         }
-        await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+        await User.findByIdAndUpdate(req.user._id ,
         {
           $push : {
              messages :  {
@@ -151,9 +211,10 @@ router.post('/',async (req,res)=>{
 
  }    
 })
-
-router.get('/getcurrentuser',async(req,res)=>{
-  const result = await User.findById("60380e67e557ee5e0c8921f6")
+//"60380e67e557ee5e0c8921f6"
+router.get('/getcurrentuser',auth,async(req,res)=>{
+  console.log('the payload day motherfuakakak',req.user);
+  const result = await User.findById(req.user._id)
   res.send(result);
 })
 
@@ -184,7 +245,7 @@ router.get('/getcurrentuser',async(req,res)=>{
 
 
 router.post('/events',async (req,res)=>{
-  const user =await User.findById("60380e67e557ee5e0c8921f6");
+  const user =await User.findById(req.user._id);
   if(user.messages.length!=0){
 
     // The text query request.
@@ -211,7 +272,7 @@ router.post('/events',async (req,res)=>{
         source : 'bot',
         msg : result.fulfillmentMessages[0].text.text[0]
       }
-      await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+      await User.findByIdAndUpdate(req.user._id ,
       {
         $push : {
           messages :  {
@@ -260,7 +321,7 @@ router.post('/selectedscenario',async (req,res)=>{
         source : 'bot',
         msg : result.fulfillmentMessages[0].text.text[0]
       }
-      await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+      await User.findByIdAndUpdate(req.user._id ,
       {
         $push : {
           messages :  {
@@ -309,7 +370,7 @@ router.post('/logout',async (req,res)=>{
     source : 'bot',
     msg : result.fulfillmentMessages[0].text.text[0]
   }
-  await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6" ,
+  await User.findByIdAndUpdate(req.user._id ,
   {
     $push : {
        messages :  {
@@ -331,5 +392,8 @@ router.post('/logout',async (req,res)=>{
 })
 
 
+//add dates to other messages ;
 
-//add dates to other messages ;  
+const x = async () =>{
+
+}

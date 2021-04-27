@@ -29,7 +29,7 @@ router.post('/',async(req,res)=>{
     //generatign a jwt 
     const jwt_token =jwt.sign({ _id:user._id,isAdmin:user.isAdmin},'secret_token')
     // const jwt_token =jwt.sign({ _id:user._id,isAdmin:user.isAdmin},'secret_token')
-
+    console.log(jwt_token);
    const adJWT = {
       jwt :  jwt_token,
       user : user

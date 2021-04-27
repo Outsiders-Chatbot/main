@@ -32,9 +32,10 @@ export const {initialingData,DeleteTheSavedCourse} = courseSlice.actions
 
 
 export const fetchCourses = ()=> async (dispatch) => {
-      const response = await axios.get('/courses/getall')
-      console.log(response.data);
-      console.log("inside fetchCourses");
+    const user  = await axios.get('/getcurrentuser')
+    console.log(  ` the url v v v v v  /courses/getall?domain=${user.data.intrest}`,);   
+      const response = await axios.get(`/courses/getall?domain=${user.data.intrest}`)
+      console.log("inside fetchCourses",response.data);
       dispatch(initialingData(response.data))
     }
   

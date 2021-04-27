@@ -8,7 +8,7 @@ const courseSchenma = new mongoose.Schema({
     author : String ,
     description : String , 
     date: { type : Date , "default" : Date.now },
-    domain: [{ type : String , enum : ['web' , 'cloud'] , required:[true, 'at least one domain sir , cmon'] }],
+    domain: [{ type : String , enum : ['web' , 'cloud','finance'] , required:[true, 'at least one domain sir , cmon'] }],
     requirements : { type : Array , "default" : ["default"] },
     price : String ,
     rating : {

@@ -11,12 +11,15 @@ import Typography from '@material-ui/core/Typography';
 import FormUser from './FormUser';
 
 
+
+
 function DialogsSettings( {setOpen  , open}) {
 
     const styles = (theme) => ({
         root: {
           margin: 0,
           padding: theme.spacing(2),
+      
         },
         closeButton: {
           position: 'absolute',
@@ -46,12 +49,6 @@ function DialogsSettings( {setOpen  , open}) {
         },
       }))(MuiDialogContent);
       
-      const DialogActions = withStyles((theme) => ({
-        root: {
-          margin: 0,
-          padding: theme.spacing(1),
-        },
-      }))(MuiDialogActions);
       
      
         const handleClose = () => {
@@ -59,20 +56,15 @@ function DialogsSettings( {setOpen  , open}) {
         };
 
     return (
-        <div>
+        <div >
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Profile Details
         </DialogTitle>
-        <DialogContent dividers>
-          <FormUser handleClose={handleClose}/>
-          
+        <DialogContent style={{width:'600px'}} dividers>
+         <FormUser />
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Leave
-          </Button>
-        </DialogActions>
+       
       </Dialog>
         </div>
     )

@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import "./App.css";
+import axios from './axios/axios';
 
 
 
@@ -8,15 +9,34 @@ import ChatbotAuth from "./components/ChatbotAuth";
 import ChatbotRegister from "./components/ChatbotRegister";
 import Introduction from "./components/Introduction";
 import Welcome from "./components/Welcome";
+import { UserContext } from './contextProvider/contextProvider';
+import AdminOffice from "./components/AdminOffice";
+import { useHistory } from "react-router-dom";
 
 
-//TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
+  const history = useHistory();
+
+  React.useEffect(() => {
+    axios.get('/getcurrentuser').then((response)=>{
+     
+     setuser(response.data)
+      })
+   
+
+ }, [])
+
+ const [user, setuser] = React.useState()
+ 
     return (
       <div className="App">
           <div>
-
+          <UserContext.Provider value={{user,setuser}}>
+      
           <Switch>
+                <Route path="/admin">
+                    <AdminOffice/>
+                </Route>
                 <Route path="/Introduction">
                    <Introduction/>
                 </Route>
@@ -29,8 +49,9 @@ const App = () => {
                 <Route path="/">
                   <Welcome/>
                 </Route>
-              </Switch>
+          </Switch>
      
+              </UserContext.Provider>
           
           </div>
       

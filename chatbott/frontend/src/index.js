@@ -6,6 +6,17 @@ import registerServiceWorker from "./registerServiceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
+import axios from './axios/axios';
+
+axios.interceptors.request.use((request)=>{
+request.headers = {
+    'x-auth-token': localStorage.getItem('SavedToken')
+}
+
+
+return request
+})
+
 ReactDOM.render(
     <BrowserRouter>
      <Provider store={store}>

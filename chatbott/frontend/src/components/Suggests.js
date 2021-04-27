@@ -5,18 +5,22 @@ import axios from '../axios/axios'
 import {fetchScenario,selectScenario} from '../Redux/stepsSlice'
 import { useDispatch , useSelector} from 'react-redux'
 import {addmessage,fetchMessages} from '../Redux/chatSlice'
+import {fetchCourses} from '../Redux/courseSlice'
+
 
 function Suggests() {
     const dispatch = useDispatch();
 
     const chooseSenario1 = async () =>{
         const scenario1 = {
-            scenario_id : "6079b194c8963e343492bc27" 
+            scenario_id : "6079b194c8963e343492bc27" ,
+            int : 'finance'
         }
        await  axios.post('/scenario/selectedScenario',scenario1).then(
             (result)=>console.log(result.data)
         )
             dispatch(fetchScenario())
+            dispatch(fetchCourses());
             console.log('disaptched scenario');
 
             const eventmsg = {
@@ -26,15 +30,18 @@ function Suggests() {
         const BotAnswer = await axios.post('/selectedscenario',eventmsg)
             console.log(BotAnswer.data);
             dispatch(addmessage(BotAnswer.data));
+            
     }
     const chooseSenario2 = async () =>{
         const scenario1 = {
-            scenario_id : "6079b5d5abf55524d88bf15f" 
+            scenario_id : "6079b5d5abf55524d88bf15f" ,
+            int : 'cloud'
         }
         await axios.post('/scenario/selectedScenario',scenario1).then(
             (result)=>console.log(result.data)
         )
         dispatch(fetchScenario())
+        dispatch(fetchCourses());
         console.log('disaptched scenario');
 
         
@@ -45,18 +52,20 @@ function Suggests() {
     const BotAnswer = await axios.post('/selectedscenario',eventmsg)
         console.log(BotAnswer.data);
         dispatch(addmessage(BotAnswer.data));
+        
     }
     return (
         <Container>
         <UserAvatar>
         <img src="https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y="/>
         </UserAvatar>
-
         <UserChatbox>
+        <div>Please choose what fits you  :  </div>
             <Button variant="contained" color="primary" onClick={chooseSenario1}>
-            Scenario 1
-            </Button><Button variant="contained" color="primary" onClick={chooseSenario2}>
-            Scenario 2
+            Job (Finance)
+            </Button>
+            <Button variant="contained" color="primary" onClick={chooseSenario2}>
+            Course (Cloud)
             </Button>
         </UserChatbox>
         </Container>
@@ -64,6 +73,7 @@ function Suggests() {
 }
 
 export default Suggests
+
 
 
 const Container = styled.div`
@@ -100,9 +110,13 @@ padding :  5px 10px;
 margin-left : 7px;
 display : flex ;
 align-items : center ;
+justify-content: space-around;
 font-size: 14px;
 font-family: Georgia, cursive;
 border-radius : 15px;
 font-weight: lighter;
+ Button{
+     margin-left : 5px;
+ }
 
 `

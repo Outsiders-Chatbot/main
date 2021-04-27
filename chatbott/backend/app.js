@@ -22,12 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "build")));
 
-app.use("/", indexRouter);
 app.use("/courses", courses);
 app.use("/report", report);
 app.use("/auth", auth);
 app.use("/register",register)
 app.use("/scenario",scenario)
+app.use("/", indexRouter);
 
 
 

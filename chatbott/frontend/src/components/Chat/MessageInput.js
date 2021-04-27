@@ -24,21 +24,22 @@ function MessageInput() {
 
     const clickMic = (e)=>{
         e.preventDefault();
-        if(e.key === 'Enter'){
-            alert('enter');
+        if(e.key !== 'Enter'){
+           console.log(e.key);
+            setClicked(!Clicked)
+            console.log(Clicked);
+            if(Clicked){
+            recognition.start()
+            recognition.onresult = (e) => {
+                console.log(e.results[e.results.length -1][0].transcript);
+                setInput(e.results[e.results.length -1][0].transcript)
+            }
+            }
+            else
+            recognition.stop();
+            setInput("")
          }
-        setClicked(!Clicked)
-        console.log(Clicked);
-        if(Clicked){
-        recognition.start()
-        recognition.onresult = (e) => {
-            console.log(e.results[e.results.length -1][0].transcript);
-            setInput(e.results[e.results.length -1][0].transcript)
-        }
-        }
-        else
-        recognition.stop();
-        setInput("")
+       
     }
 
   
@@ -63,12 +64,12 @@ function MessageInput() {
    
     return (
         <Container>
-            <InputContainer>
-                <form>
-                    <RecordButton 
+            <RecordButton 
                         onClick={clickMic}>
                         {   Clicked?<MicNoneIcon/>:<MicIconStyled/>}    
-                    </RecordButton>
+            </RecordButton>
+            <InputContainer>
+                <form>
                     <input 
                         onChange={(e)=>setInput(e.target.value)}
                         type="text" 

@@ -1,4 +1,4 @@
-import React , {useState,useEffect} from 'react'
+import React , {useState,useEffect,useContext} from 'react'
 import SendIcon from '@material-ui/icons/Send';
 import styled from 'styled-components'
 import axios from '../../axios/axios'
@@ -8,19 +8,23 @@ import MicIcon from '@material-ui/icons/Mic';
 
 import {addmessage,selectMessagesAuth} from '../../Redux/chatAuthSlice'
 import { useDispatch} from 'react-redux'
+import { UserContext } from '../../contextProvider/contextProvider';
 
 function MessageInputAuth({AuthMessages , setAuthMessages}) {
     const dispatch = useDispatch();
     const [input, setInput] = useState("");
     const history = useHistory();
+    const {user,setuser} = useContext(UserContext)
 
     const [fields, setfields] = useState('email');
     const [Request, setRequest] = useState({source : 'user'})
-
+    
     const send =async (e) => {
         e.preventDefault();
         if(!input) return;
-        const usermsg = {
+        if(!Request.email && !Request.password)
+        console.log('inside the email');
+        {const usermsg = {
             source : 'user',
             msg : input
         }
@@ -28,26 +32,65 @@ function MessageInputAuth({AuthMessages , setAuthMessages}) {
         setRequest({
             ...Request,[fields]:input
         })
-        setInput("")
-        const botmsg = {
-            source : 'bot',
-            msg : 'give me your password now'
-        }
+        setInput("")}
+      
+        if(!Request.email)
+        {
+        console.log('inside the password');
+
+            const botmsg = {
+                source : 'bot',
+                msg : 'give me your password now'
+            }
         dispatch(addmessage(botmsg))
         setfields('password')
         setRequest({
             ...Request,[fields]:input
-        })
+        })}
         console.log(Request);
        
     }
 
     useEffect(() => {
         if(Request.password){
-            axios.post('/auth/',Request).then((res)=>{console.log('this is ur data',res.data);})
-            setTimeout(() => {
-                history.push('/')
-            }, 1000);
+            axios.post('/auth/',Request).then((res)=>{
+                const usermsg = {
+                    source : 'bot',
+                    msg : 'Welcome to the best chatbot in the world ! Enjoy your experience Sir xx'
+                }
+                dispatch(addmessage(usermsg))
+                console.log(res.data.user.role);
+                localStorage.setItem("SavedToken" ,res.data.jwt);
+                setuser(res.data.user);
+                if(res.data.user.role=='user')
+               { setTimeout(() => {
+                 history.push('/')
+                 }, 3000);}
+                if(res.data.user.role=='admin')
+                {
+                    setTimeout(() => {
+                        history.push('/admin')
+                        }, 3000);
+                }
+            }).catch((er)=>{
+                console.log('you should check your  credentials')
+                const usermsg = {
+                    source : 'bot',
+                    msg : 'please check your credentials sir ! it seems that there is something wrong '
+                }
+                setfields('email');
+                setRequest({source : 'user'})
+                dispatch(addmessage(usermsg))
+                const usermsgss = {
+                    source : 'bot',
+                    msg : "Let's try again if you want ! can I get your email ?"
+                }
+                setTimeout(() => {
+                dispatch(addmessage(usermsgss))
+                }, 1500);
+            })
+            
+            
         }
     }, [Request])
 

@@ -16,7 +16,13 @@ function SavedCourse({course}) {
     const handleClickOpen = () => {
       setOpen(true);
     };
-
+    const [percentage, setpercentage] = React.useState('60')
+    React.useEffect(() => {
+        var min = 1;
+   var max = 100;
+   var rand =  Math.round(min + (Math.random() * (max-min)));
+   setpercentage(rand);
+    }, [])
     const  dispatch = useDispatch();
     const [openSlack, setOpenSlack] = React.useState(false);
     
@@ -37,7 +43,7 @@ function SavedCourse({course}) {
             </CourseAvatar>
             <CourseDetails>
                 <div style={{fontStyle:"italic" ,fontSize: "18px" }}>{course.course_id.title}</div>
-                <ProgressBar Coursename="angular"  percentage="23" />
+                <ProgressBar Coursename="angular"  percentage={percentage} />
             </CourseDetails>
             <Func>
                 <div>

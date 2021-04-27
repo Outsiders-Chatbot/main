@@ -4,6 +4,9 @@ module.exports = router;
 const {Scenario} = require('../Models/scenario')
 const {User} = require('../Models/user')
 const {PDUserScenario} = require('../Models/PorteuseDonneScenarioUser')
+const {auth} = require('../Middlwares/middlewareAUTH');
+
+router.use(auth)
 
 
 router.get('/',(req,res)=>{
@@ -56,14 +59,16 @@ console.log(req.body.scenario_id)
 const pDUserScenario = new PDUserScenario({
     progress : 0 ,
     scenario_id : req.body.scenario_id ,
-    user_id : "60380e67e557ee5e0c8921f6"
+    user_id : req.user._id
 
 } )
 const result2 = await pDUserScenario.save();
-const user = await User.findByIdAndUpdate("60380e67e557ee5e0c8921f6",
+const user = await User.findByIdAndUpdate(req.user._id,
 {
     $set : {
+        intrest : req.body.int,
         scenario_id : result2._id 
+        
      }
    }
 
@@ -90,7 +95,7 @@ try{
 })
 
 router.get('/selectedScenarioByuserId', async (req,res)=>{
-    const user = await User.findById("60380e67e557ee5e0c8921f6")
+    const user = await User.findById(req.user._id)
     console.log('user id ',user.scenario_id);
     const result = await PDUserScenario.findById(user.scenario_id) 
     .populate({
@@ -105,7 +110,7 @@ router.get('/selectedScenarioByuserId', async (req,res)=>{
 })
 
 router.post('/updateProgress', async (req,res)=>{
-    const user = await User.findById("60380e67e557ee5e0c8921f6")
+    const user = await User.findById(req.user._id)
 
     const result = await PDUserScenario.findByIdAndUpdate(user.scenario_id,
     {

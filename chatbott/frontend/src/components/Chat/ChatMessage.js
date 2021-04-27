@@ -34,6 +34,7 @@ hope.current.scrollIntoView({ behavior:'smooth' })
 
     return (
         <Container id="msg" > 
+        {console.log(scenario)}
         {(scenario) ? 
          messages.map( (message,index) =>{
           return message.source==='bot'?
@@ -41,14 +42,6 @@ hope.current.scrollIntoView({ behavior:'smooth' })
             <UserMessage key={index} message={message}/>
         } ) : <Suggests /> 
       }
-            {/* {
-              (scenario && messages.length == 0)
-                messages.map( (message,index) =>{
-                  return message.source==='bot'?
-                  <Botmessage  key={index} message={message}/> :
-                    <UserMessage key={index} message={message}/>
-                } )
-            } */}
             <div ref={hope}></div>
         </Container>
     )

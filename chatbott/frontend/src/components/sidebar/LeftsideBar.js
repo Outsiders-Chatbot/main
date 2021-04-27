@@ -32,7 +32,7 @@ function LeftsideBar() {
       } )
       setsavedIds(copy)
     }, [savedCourses])
-
+   
     const  dispatch = useDispatch();
     useEffect(() => {  
             dispatch(fetchCourses())
@@ -75,10 +75,13 @@ function LeftsideBar() {
             <RecommandedCourses>
                 <RecommandedCoursesBox>
                 <strong style={{fontFamily:'cursive'}}>Recommanded Courses : </strong>  
-                  {   
+                {
+                  console.log(courses , 'he is the courses ! ! ! ')
+                }
+                  {   courses.length != 0?
                   courses.map( (course , index) =>{
                     return <Course key={index} course={course}/>
-                  } )
+                  } ) : <p>no Recommanded Courses yet</p>
                   }
               
                   
