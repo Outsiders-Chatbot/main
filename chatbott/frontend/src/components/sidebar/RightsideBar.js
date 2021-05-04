@@ -34,7 +34,17 @@ function RightsideBar() {
     return (
        
               <Container>
-          
+            <Profile>
+                <ProfileBox>
+                   <ProfileNotif/>
+                </ProfileBox>
+            </Profile>
+            <Statics onClick={()=>handleClickOpen()}>
+                <StaticBox> 
+                <StaticProgress/>
+                <Days/>     
+                </StaticBox>
+            </Statics>
             <Report>
                 <ReportBox>
                 <Reportflag>

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://saghir:saghirmennine922018@cluster0.tpkrk.mongodb.net/PI', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://saghir:saghirmennine922018@cluster0.tpkrk.mongodb.net/PI')
 .then( ()=>{console.log('connected to MongoDB...')} )
 .catch( (er)=> console.log(er) )
 
 const courseSchenma = new mongoose.Schema({
-    id: Number,
+    id : Number ,
     name: String, 
     content : String ,
     state : {

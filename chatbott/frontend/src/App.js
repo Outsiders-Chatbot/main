@@ -46,25 +46,13 @@ const App = () => {
       <div>
         <UserContext.Provider value={{ user, setuser }}>
           <Switch>
-           {user && user.role=='admin' && <Route path="/admin">
-              <Router>
-                <React.Suspense fallback={loading}>
-                  <Switch>
-                    <Route
-                      path="/"
-                      name="Home"
-                      render={(props) => <TheLayout {...props} />}
-                    />
-                  </Switch>
-                </React.Suspense>
-              </Router>
-            </Route>}
-            <Route path="/Introduction">
+              <Route path="/Introduction">
               <Introduction />
             </Route>
             <Route path="/register">
               <ChatbotRegister />
             </Route>
+            
             <Route path="/auth">
               <ChatbotAuth />
             </Route>
