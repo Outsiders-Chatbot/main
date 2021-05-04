@@ -5,8 +5,7 @@ import RightsideBar from "../components/sidebar/RightsideBar";
 import styled from 'styled-components'
 import { useDispatch , useSelector} from 'react-redux'
 import {addmessage,fetchMessages} from '../Redux/chatSlice'
-import { Link, Redirect , useContext } from 'react-router-dom'
-function Welcome() {
+function Welcome({user}) {
   const dispatch = useDispatch();
 
 React.useEffect(() => {
@@ -18,7 +17,7 @@ React.useEffect(() => {
     return (
         <Container>
                 <LeftsideBar/>
-              <Chatbot/>
+              <Chatbot users={user}/>
               <RightsideBar/>  
         </Container>
     )

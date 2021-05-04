@@ -1,11 +1,18 @@
-import React from 'react'
+import React , {useEffect , useState , useContext} from 'react'
 import styled from 'styled-components'
+import { UserContext } from '../../contextProvider/contextProvider';
 
-function UserMessage({message}) {
+function UserMessage({message , user}) {
+    
     return (
         <Container>
+            {console.log('users.img',user)}
             <UserAvatar>
-            <img src="https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y="/>
+            {
+                          user ?<img src={`${user.imgpic}`}/>:
+                          <img src='https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y='/>
+            }
+
             </UserAvatar>
 
             <UserChatbox>

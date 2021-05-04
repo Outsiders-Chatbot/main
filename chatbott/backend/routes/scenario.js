@@ -95,6 +95,7 @@ try{
 })
 
 router.get('/selectedScenarioByuserId', async (req,res)=>{
+    console.log(req.user_id);
     const user = await User.findById(req.user._id)
     console.log('user id ',user.scenario_id);
     const result = await PDUserScenario.findById(user.scenario_id) 

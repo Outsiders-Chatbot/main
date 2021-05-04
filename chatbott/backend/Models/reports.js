@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/PI')
+mongoose.connect('mongodb+srv://saghir:saghirmennine922018@cluster0.tpkrk.mongodb.net/PI', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
 .then( ()=>{console.log('connected to MongoDB...')} )
 .catch( (er)=> console.log(er) )
 
 const courseSchenma = new mongoose.Schema({
-    
+    id: Number,
+    name: String, 
     content : String ,
     state : {
         type: String,
@@ -17,10 +18,8 @@ const courseSchenma = new mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: "user"
         },
-
-      img : String
+    img : String
 })  
-
 
 const report = mongoose.model('report',courseSchenma)
 

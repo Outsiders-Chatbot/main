@@ -20,8 +20,10 @@ export const savedcourseSlice = createSlice({
 }
         },
         addSavedCourse : (state , action)=>{
+            if(action.payload){
+                console.log('action.payload',action.payload);
             const payload = action.payload;
-            state.savedcourses.push(payload)
+            state.savedcourses.push(payload)}
         }
     }
 })

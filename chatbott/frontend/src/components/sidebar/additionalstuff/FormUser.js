@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import CameraEnhanceOutlinedIcon from "@material-ui/icons/CameraEnhanceOutlined";
 import IconButton from '@material-ui/core/IconButton';
-
+import { storage } from "../../../firebase";
 import axios from '../../../axios/axios'
 import SettingsIcon from '@material-ui/icons/Settings';
 import { UserContext } from '../../../contextProvider/contextProvider';
@@ -16,20 +16,67 @@ function FormUser({handleClose}) {
   const [open, setOpen] = React.useState(true);
   const [openEmail, setOpenopenEmail] = React.useState(true);
 
-  const [openIntrest, setOpenIntrest] = React.useState(true);
+  const [openLinkedin, setOpenopenLinkedin] = React.useState(true);
 
+const [linkedinDetails, setlinkedinDetails] = useState({})
+  const [openIntrest, setOpenIntrest] = React.useState(true);
+  const [url, setUrl] = React.useState("");
+  const [progress, setProgress] = React.useState(0);
   const [userInfo, setuserInfo] = React.useState({
     file:[],
     filepreview:"https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y="
 })
+
+
   
   const handleImage = (event) =>{
-    console.log(event.target.files[0]);
-    setuserInfo({
-        ...userInfo,file:event.target.files[0],
-        filepreview: URL.createObjectURL(event.target.files[0])
-    })
-    console.log(URL.createObjectURL(event.target.files[0]));
+    console.log('image : ',event.target.files[0]);
+    // setuserInfo({
+    //     ...userInfo,file:event.target.files[0],
+    //     filepreview: URL.createObjectURL(event.target.files[0])
+    // })
+    // //console.log(URL.createObjectURL(event.target.files[0]));
+    // const img = {
+    //   imgpic : URL.createObjectURL(event.target.files[0])
+    // }
+    // axios.post('/user/changeImage',img).then((data)=>{
+    //   console.log('thisisi s yiour data',data.data);
+    // }).catch((er)=>{
+    //   console.log(er);
+    // })
+console.log('user id ',user._id);
+    const uploadTask = storage.ref(`images/${user._id}`).put(event.target.files[0]);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(user._id)
+          .getDownloadURL()
+          .then(url => {
+            console.log(url);
+            setUrl(url);
+                        const img = {
+                imgpic : url
+              }
+             axios.post('/user/changeImage',img).then((data)=>{
+          
+            }).catch((er)=>{
+              console.log(er);
+            })
+          });
+      }
+    );
+
 
 }
 
@@ -40,6 +87,23 @@ function FormUser({handleClose}) {
 
     const handleClickOpenEmail = () => {
       setOpenopenEmail((olddata)=>!olddata);
+    };
+
+
+    const handleClickOpenLinkedIN = (e) => {
+      setOpenopenLinkedin((olddata)=>!olddata);
+      console.log(e.target.value.length);
+      if(e.target.value.length !=0 ){
+        const linkedin = {
+        linkedinurl : e.target.value
+      }
+      axios.post('/user/webscarping',linkedin).then(
+        (data)=>{
+        console.log('our new user',data.data)
+        setuser(data.data)
+        console.log('setted user');
+      }
+      )}
     };
 
     const handleClickOpenIntrest = () => {
@@ -57,11 +121,16 @@ function FormUser({handleClose}) {
     return (
         <div style={{width:"400px"}}>
  <Container>
-            <Profile>
-
+   
+            <ProfileBIG>
+       
                     <Logo>
                       <div>
-                    <img src={`${userInfo.filepreview}`}/>
+                        {
+                          user.imgpic ?<img src={`${user.imgpic}`}/>:
+                          <img src='https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y='/>
+                        }
+                  
                       </div>
                     </Logo>
                     
@@ -97,24 +166,33 @@ function FormUser({handleClose}) {
                     
                   
                     <Headline>
-                        <div>Random user   </div> 
+                        <div>{user.username} </div> 
                     </Headline>
                     <Note>
-                        <span>hardwork</span>
+                      <Labelselect>
+                        <div className='linkedin'>
+
+                        <label style={{whiteSpace: 'nowrap'}} htmlFor="linkedin" hidden={!openLinkedin}>your linkedin link<span onClick={()=>setOpenopenLinkedin((olddata)=>!olddata)}><SettingsIcon/></span>  </label>
+                        <TextField hidden={openLinkedin} style={{width:'200px'}} id="linkedin" name="linkedin"  type="text"  onBlur={(e)=>handleClickOpenLinkedIN(e)}  />
+                        </div>
+                        </Labelselect>
                     </Note>
-            </Profile>
+            </ProfileBIG>
             <NotLogout>
           
             <Formik
       initialValues={{
-        firstName: 'random user' ,
-        email:'user.email@khalil.com',
-        intrest: 'user.intrest'
+        firstName: user.username ,
+        email:user.email,
+        intrest: user.intrest
       }}
       validationSchema={validate}
       onSubmit={(values,{resetForm}) => {
         console.log(values)
-       
+       axios.post('/user/updateUser',values).then((data)=>{
+         console.log(data.data)
+         setuser(data.data)
+       })
       }}
     >
       {formik => (
@@ -126,8 +204,8 @@ function FormUser({handleClose}) {
           <label style={{whiteSpace: 'nowrap'}} htmlFor="email" hidden={!openEmail}> {formik.values.email}<span onClick={()=>handleClickOpenEmail()}><SettingsIcon/></span>  </label>
           <TextField hidden={openEmail} style={{width:'200px'}} id="email" name="email"  type="email"  onBlur={()=>handleClickOpenEmail()}  onChange={formik.handleChange}  value={formik.values.email} />
          </Labelselect>
+        
          <Labelselect>
-
           <label style={{whiteSpace: 'nowrap'}} htmlFor="firstName" hidden={!open}> {formik.values.firstName}<span onClick={()=>handleClickOpen()}><SettingsIcon/></span>  </label>
           <TextField hidden={open}  id="firstName" name="firstName"  type="text"  onBlur={()=>handleClickOpen()}  onChange={formik.handleChange}  value={formik.values.firstName} />
         </Labelselect>
@@ -156,7 +234,22 @@ function FormUser({handleClose}) {
 
             </NotLogout>
         </Container>
-        
+        <LinkedinRes>
+          {
+            user.situation && <Profile>
+              <strong style={{textAlign:'center' ,textDecoration:'underline'}}>LinkedIn infos</strong>
+              <div><strong>situation :</strong>{user.situation}</div> 
+
+              <div><strong>competence :</strong> {user.competence.map( (comp , index)=>{
+                return <span key={index} style={{textDecoration:'underline' , marginRight:'6px'}}> {comp} </span>
+              } )}</div>
+
+              <div><strong>school :</strong>{user.school}</div> 
+
+
+              </Profile>
+          }
+        </LinkedinRes>
         
     </div>
     )
@@ -166,12 +259,27 @@ export default FormUser
 
 const Container = styled.div`
 display: grid;
-grid-template-columns:  auto 50% ;
+grid-template-columns:  auto 60% ;
 
   `
+  const LinkedinRes = styled.div`
+ 
+   margin-top :10px;
+   width : 100%
+
+  
+    `
 
 const Profile = styled.div`
+display :flex;
+justify-content: space-around;
+align-items: center;
+color : grey;
+flex-direction: column;
 
+
+`
+const ProfileBIG = styled.div`
 
 `
 const Labelselect = styled.div`
@@ -185,6 +293,9 @@ margin-bottom : 20px;
     span{
       margin-left : 5px;
     }
+  }
+  .linkedin{
+   color :grey;
   }
 
 ` 

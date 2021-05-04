@@ -55,19 +55,18 @@ function LeftsideBar() {
             <SavedCourses>
               <SavedCoursesBox>
                 <Header>
-                <strong style={{fontFamily:'cursive'}}>Saved Courses :
-                  </strong>  
+                <div style={{fontFamily:'cursive'}}>Find your <strong>Saved Courses  </strong>
+                
+                  </div>  
                   <SavedDialogs savedCourses={savedCourses}  open={open} setOpen={setOpen}/>
-                  <span onClick={()=>{handleClickOpen()}}>See all</span>
+                  <span style={{textDecoration:'underline'}} onClick={()=>{handleClickOpen()}}>{'  _'} here</span>
                 </Header>
-               
-                { 
+                {/* { 
                   savedCourses.map( (course , index) =>{
-                 
-                    if(index >= 2) return
+                    console.log(course);
                     return <SavedCourse key={index} course={course}/>
                   } )
-                  }
+                  } */}
               
               </SavedCoursesBox>
             </SavedCourses>
@@ -75,9 +74,7 @@ function LeftsideBar() {
             <RecommandedCourses>
                 <RecommandedCoursesBox>
                 <strong style={{fontFamily:'cursive'}}>Recommanded Courses : </strong>  
-                {
-                  console.log(courses , 'he is the courses ! ! ! ')
-                }
+            
                   {   courses.length != 0?
                   courses.map( (course , index) =>{
                     return <Course key={index} course={course}/>
@@ -104,7 +101,7 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: grid;
-  grid-template-rows: 40px 240px 435px ;
+  grid-template-rows: 40px 160px 510px ;
   `
 const Logo = styled.div`
 width: 100%;
@@ -129,7 +126,7 @@ height:100%;
 `
 const Header = styled.div`
 display : flex ;
-justify-content : space-between;
+justify-content : space-around;
  span  {
    color: grey;
    font-style : italic;
@@ -153,6 +150,9 @@ background-color :white;
 border-radius: 8px;
 overflow : hidden;
 box-shadow :0 4px 6px -2px rgba(0, 0, 0, 0.4);
+display : flex;
+justify-content : center;
+align-items :  center;
   `
 const RecommandedCourses = styled.div`
 padding : 2px 15px;

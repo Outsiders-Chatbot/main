@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import axios from '../axios/axios'
 import {addmessage,fetchMessages} from '../Redux/chatSlice'
 import { UserContext } from '../contextProvider/contextProvider';
-function Chatbot() {
+function Chatbot({users}) {
     const  dispatch = useDispatch();
     useEffect(() => {
         const event = async ()=>{
@@ -25,14 +25,14 @@ function Chatbot() {
        } )
     }, [])
 
-    const {user,setuser} = useContext(UserContext)
 
     return (
         <div>
            
             <Container>
+                {console.log('inside chat bot for the userr *******',users)}
             <Chat>
-                <ChatMessage/>
+                <ChatMessage users={users}/>
                 <MessageInput/>
             </Chat>
             </Container>

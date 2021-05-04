@@ -11,7 +11,7 @@ import { useDispatch , useSelector} from 'react-redux'
 import Suggests from '../Suggests'
 
 
-function ChatMessage() {
+function ChatMessage({users}) {
   const hope = useRef(null)
 
 useEffect(() => {
@@ -34,12 +34,12 @@ hope.current.scrollIntoView({ behavior:'smooth' })
 
     return (
         <Container id="msg" > 
-        {console.log(scenario)}
+        {console.log('your user inside chat***************',users)}
         {(scenario) ? 
          messages.map( (message,index) =>{
           return message.source==='bot'?
-          <Botmessage  key={index} message={message}/> :
-            <UserMessage key={index} message={message}/>
+          <Botmessage   key={index} message={message}/> :
+            <UserMessage user={users} key={index} message={message}/>
         } ) : <Suggests /> 
       }
             <div ref={hope}></div>

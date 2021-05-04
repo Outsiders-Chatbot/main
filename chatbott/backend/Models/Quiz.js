@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/PI')
+mongoose.connect('mongodb+srv://saghir:saghirmennine922018@cluster0.tpkrk.mongodb.net/PI')
 .then( ()=>{console.log('connected quiz to MongoDB...')} )
 .catch( (er)=> console.log(er) )
 

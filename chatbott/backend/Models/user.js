@@ -1,15 +1,20 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/PI')
+mongoose.connect('mongodb+srv://saghir:saghirmennine922018@cluster0.tpkrk.mongodb.net/PI')
 .then( ()=>{console.log('connected to MongoDB...')} )
 .catch( (er)=> console.log(er) )
 
 const courseSchenma = new mongoose.Schema({
     username: String ,
     password : String , 
+    situation: { type : String , default: 'No situation has been founded'},
+    competence: { type : Array , "default" : ['no Competence Founded'] },
+    school: { type : String ,  default: 'No School has been founded'},
     email:{
         type:String,
         unique :true
     } , 
+    country: String,
+    imgpic: String,
     role: {
         type: String,
         enum : ['user','admin','superAdmin'],
@@ -27,7 +32,7 @@ const courseSchenma = new mongoose.Schema({
               type: mongoose.Schema.Types.ObjectId,
               ref: "quiz"
             }],
-    profilePic : String,
+  
     level : String ,
     scenario_id:{ 
         type: mongoose.Schema.Types.ObjectId,

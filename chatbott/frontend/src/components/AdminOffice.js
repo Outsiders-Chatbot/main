@@ -1,23 +1,25 @@
 import React from 'react'
 import { UserContext } from '../contextProvider/contextProvider';
 import { useHistory } from "react-router-dom";
+import { TheLayout } from '../containers';
+import Dashboard from '../views/dashboard/Dashboard';
 
 function AdminOffice() {
-    const {user,setuser} = React.useContext(UserContext)
-    const history = useHistory();
+   
+   // const history = useHistory();
 
-    React.useEffect(() => {
-        console.log('admin user',user);
-        if(user.role=='user'){
-            console.log('pushedd ');
-            history.push('/')
-        }
+    // React.useEffect(() => {
+        // console.log('admin user',user);
+        // if(user.role=='user'){
+        //     console.log('pushedd ');
+        //     history.push('/')
+        // }
 
-    }, [])
+    // }, [])
 
     return (
         <div>
-            hello from the admin office how can i help you ?
+            admin
         </div>
     )
 }

@@ -21,7 +21,7 @@ function Course({course}) {
         dispatch(DeleteTheSavedCourse(course))
         axios.post('courses/addSavedCourse', {
             course_id : course._id
-        }).then((save)=>{console.log(save)
+        }).then((save)=>{
             dispatch(addSavedCourse(course))
             dispatch(fetchSavedCourses())
         })

@@ -20,7 +20,9 @@ router.post('/saveUser', async(req,res)=>{
         username:req.body.username,
         password:req.body.password,
         email:req.body.email,
+        imgpic:"https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y="
        // isAdmin :req.body.isAdmin,
+        ,
         isValid:false
     })
     
@@ -45,7 +47,7 @@ router.post('/saveUser', async(req,res)=>{
         from:"chatbotPI@outlook.com",
         to:user.email,
         subject:"verify your account",
-        text:`click on this link to verify your acocunt http://localhost:3001/register/verify?jwt=${jwt_token}`
+        text:`click on this link to verify your account http://localhost:3001/register/verify?jwt=${jwt_token}`
     
     }
     

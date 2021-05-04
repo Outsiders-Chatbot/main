@@ -4,16 +4,14 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require('cors');
-const indexRouter = require("./routes/index");
+//const indexRouter = require("./routes/index");
 const courses = require("./routes/courses");
 const report = require("./routes/report");
 const auth = require("./routes/auth");
 const register = require("./routes/register")
 const scenario = require("./routes/scenario")
 const userss = require("./routes/user")
-
-
-
+require('dotenv').config()//** 
 
 
 const app = express();
@@ -30,7 +28,9 @@ app.use("/auth", auth);
 app.use("/register",register)
 app.use("/scenario",scenario)
 app.use("/user", userss);
-app.use("/", indexRouter);
+//app.use("/", indexRouter);
+app.use('/login', require('./routes/userRouter')); // **
+
 
 
 

@@ -62,7 +62,7 @@ function Dialogs( {setOpen  , open , savedCourses}) {
         <div>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-         All Saved Courses
+        Your saved Courses
         </DialogTitle>
         <Container>
 
@@ -76,11 +76,7 @@ function Dialogs( {setOpen  , open , savedCourses}) {
                   }
                   
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Save Course
-          </Button>
-        </DialogActions>
+
         </Container>
       </Dialog>
         </div>

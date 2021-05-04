@@ -14,6 +14,7 @@ import { UserContext } from '../contextProvider/contextProvider';
 
 function ProfileNotif() {
     const [open, setOpen] = React.useState(false);
+const {user,setuser} = React.useContext(UserContext)
       
     const dispatch = useDispatch()
     const handleClickOpen = () => {
@@ -32,26 +33,38 @@ function ProfileNotif() {
         }
         dispatch(addmessage(logoutmsg))
         console.log(BotAnswer.data.msg);
-
+        
        setTimeout(() => {
+        localStorage.removeItem("SavedToken");
+        console.log(user);
+        setuser({})
         history.push('/logout')
-        alert('redirectd after 3second')   
-       }, 3000);
+       }, 1000);
         
     }
-    const {user,setuser} = useContext(UserContext)
 
-
+const [currentuser, setcurrentuser] = React.useState({});
+React.useEffect(() => {
+    
+   axios.get('/getcurrentuser').then( (result)=>{
+    
+       setcurrentuser(result.data)
+   })
+}, [])
     const [Notification, setNotification] = React.useState(true);
     return (
         <Container>
             <Profile>
 
                     <Logo>
-                    <img src="https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y="/>
+                    {
+                          currentuser.imgpic ?<img src={`${currentuser.imgpic}`}/>:
+                          <img src='https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y='/>
+                        }
+                    
                     </Logo>
                     <Headline>
-                        <div>chatbotUser
+                        <div>{currentuser.username}
                             <SettingButton onClick={()=>handleClickOpen()}>
                             <SettingsIcon className="settings"/>
                             </SettingButton>
@@ -59,7 +72,7 @@ function ProfileNotif() {
                             </div> 
                     </Headline>
                     <Note>
-                        <span>hardwork</span>
+                        <span>Beginner</span>
                     </Note>
             </Profile>
             <NotLogout>
