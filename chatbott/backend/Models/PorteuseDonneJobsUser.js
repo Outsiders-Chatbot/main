@@ -23,4 +23,4 @@ const courseSchenma = new mongoose.Schema({
 
 const porteuseDonneJobsUser = mongoose.model('porteuseDonneJobsUser',courseSchenma)
 
-exports.PorteuseDonneUserCourses = porteuseDonneJobsUser;
+exports.PDUserJob = porteuseDonneJobsUser;

@@ -11,8 +11,15 @@ export const courseSlice = createSlice({
         
         initialingData : (state , action)=>{
             state.courses = action.payload;
+        } ,
+        DeleteTheSavedCourse : (state , action)=>{
+            const payload = action.payload;
+            const index = state.courses.findIndex((item) => item._id === payload._id);
+            if (index !== -1) {
+            state.courses.splice(index, 1);
         }
     }
+}
 })
 
 
@@ -21,13 +28,14 @@ export const selectCourses = (state) => {
     };
 
 
-export const {initialingData} = courseSlice.actions
+export const {initialingData,DeleteTheSavedCourse} = courseSlice.actions
 
 
 export const fetchCourses = ()=> async (dispatch) => {
-      const response = await axios.get('/getallCourses')
-      console.log(response.data);
-      console.log("inside fetchCourses");
+    const user  = await axios.get('/getcurrentuser')
+    console.log(  ` the url v v v v v  /courses/getall?domain=${user.data.intrest}`,);   
+      const response = await axios.get(`/courses/getall?domain=${user.data.intrest}`)
+      console.log("inside fetchCourses",response.data);
       dispatch(initialingData(response.data))
     }
   

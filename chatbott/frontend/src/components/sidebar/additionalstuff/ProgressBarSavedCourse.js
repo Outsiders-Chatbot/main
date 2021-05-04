@@ -32,6 +32,10 @@ justify-content:center ;
 height:100%;
 width: 60%;
 font-size:12px;
+span{
+    margin-left:77px;
+    white-space: nowrap;
+}
 
 }
 `

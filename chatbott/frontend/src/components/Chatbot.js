@@ -1,11 +1,11 @@
-import React , {useEffect} from 'react'
+import React , {useEffect , useContext} from 'react'
 import styled from 'styled-components'
 import ChatMessage from './Chat/ChatMessage'
 import MessageInput from './Chat/MessageInput'
 import { useDispatch } from 'react-redux'
 import axios from '../axios/axios'
 import {addmessage,fetchMessages} from '../Redux/chatSlice'
-
+import { UserContext } from '../contextProvider/contextProvider';
 function Chatbot() {
     const  dispatch = useDispatch();
     useEffect(() => {
@@ -23,11 +23,13 @@ function Chatbot() {
        event().then( ()=>{
            console.log('done');
        } )
-       
     }, [])
+
+    const {user,setuser} = useContext(UserContext)
+
     return (
         <div>
-
+           
             <Container>
             <Chat>
                 <ChatMessage/>

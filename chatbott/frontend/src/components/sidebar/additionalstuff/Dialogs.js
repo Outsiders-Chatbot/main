@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import SavedCourse from '../SavedCourse';
 import styled from 'styled-components'
 
-function Dialogs( {setOpen  , open}) {
+function Dialogs( {setOpen  , open , savedCourses}) {
 
     const styles = (theme) => ({
         root: {
@@ -67,13 +67,14 @@ function Dialogs( {setOpen  , open}) {
         <Container>
 
         <DialogContent dividers>
-         <SavedCourse/>
-         <SavedCourse/>
-
-         <SavedCourse/>
-         <SavedCourse/>
-         <SavedCourse/>
-
+        { 
+                  savedCourses.map( (course , index) =>{
+                    
+                  
+                    return <SavedCourse key={index} course={course}/>
+                  } )
+                  }
+                  
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">

@@ -4,7 +4,7 @@ mongoose.connect('mongodb://localhost/PI')
 .catch( (er)=> console.log(er) )
 
 const courseSchenma = new mongoose.Schema({
-    name: String ,
+    username: String ,
     password : String , 
     email:{
         type:String,
@@ -17,11 +17,11 @@ const courseSchenma = new mongoose.Schema({
     },
     isValid: Boolean,
     messages: { type : Array , "default" : [] },
-    intrests: { type : Array , "default" : [] },
+    intrest: String,
     courses_id: [
         {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Course"
+          ref: "porteuseDonneUserCourses"
         }],
     quiz_id: [{
               type: mongoose.Schema.Types.ObjectId,
@@ -31,8 +31,13 @@ const courseSchenma = new mongoose.Schema({
     level : String ,
     scenario_id:{ 
         type: mongoose.Schema.Types.ObjectId,
-        ref: "scenario"
-        }
+        ref: "porteuseDonneScenarioUser"
+        },
+    jobs_id:[
+        { type: mongoose.Schema.Types.ObjectId,
+          ref: "porteuseDonneJobsUser"
+         }],
+    
 
 
 })

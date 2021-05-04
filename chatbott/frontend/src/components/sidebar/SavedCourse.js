@@ -2,21 +2,38 @@ import React from 'react'
 import styled from 'styled-components'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import DeleteIcon from '@material-ui/icons/Delete';
-import DialogsSettings from './additionalstuff/SavedDialogs'
+import SavedDialogs from './additionalstuff/SavedDialogs'
 import ProgressBar from './additionalstuff/ProgressBar';
 import SnackSave from './additionalstuff/SnackSave';
 import SnackDelete from './additionalstuff/SnackDelete';
-function SavedCourse() {
+import {fetchSavedCourses,selectSavedCourses,deleteSavedCourse} from '../../Redux/savedcourseSlice'
+import { useDispatch , useSelector} from 'react-redux'
+import axios from '../../axios/axios'
+
+function SavedCourse({course}) {
     const [open, setOpen] = React.useState(false);
       
     const handleClickOpen = () => {
       setOpen(true);
     };
-
-    
+    const [percentage, setpercentage] = React.useState('60')
+    React.useEffect(() => {
+        var min = 1;
+   var max = 100;
+   var rand =  Math.round(min + (Math.random() * (max-min)));
+   setpercentage(rand);
+    }, [])
+    const  dispatch = useDispatch();
     const [openSlack, setOpenSlack] = React.useState(false);
     
+    
       const handleClick = () => {
+        axios.post('courses/deleteSavedCourse', {
+            course_id : course._id
+        }).then((save)=>console.log(save))
+
+        dispatch(deleteSavedCourse(course))
+ 
         setOpenSlack(true);
       };
     return (<>
@@ -25,8 +42,8 @@ function SavedCourse() {
             <img src="https://cdn.auth0.com/blog/illustrations/react.png"/>
             </CourseAvatar>
             <CourseDetails>
-                <div style={{fontStyle:"italic" ,fontSize: "18px" }}>Course name</div>
-                <ProgressBar Coursename="angular"  percentage="40" />
+                <div style={{fontStyle:"italic" ,fontSize: "18px" }}>{course.course_id.title}</div>
+                <ProgressBar Coursename="angular"  percentage={percentage} />
             </CourseDetails>
             <Func>
                 <div>
@@ -39,7 +56,7 @@ function SavedCourse() {
                 </div>
             </Func>
         </Container>
-          <DialogsSettings open={open} setOpen={setOpen} />
+          <SavedDialogs course={course} open={open} setOpen={setOpen} />
           <SnackDelete  openSlack={openSlack} setOpenSlack={setOpenSlack} />
           </>
     )

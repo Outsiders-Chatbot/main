@@ -1,21 +1,34 @@
-import React from 'react'
+import React ,{ useEffect} from 'react'
 import styled from 'styled-components'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Dialogs from './additionalstuff/CourseDialog'
 import SnackSave from './additionalstuff/SnackSave'
+import {fetchSavedCourses,selectSavedCourses,addSavedCourse} from '../../Redux/savedcourseSlice'
+import { useDispatch , useSelector} from 'react-redux'
+import axios from '../../axios/axios'
+import { fetchCourses,DeleteTheSavedCourse } from '../../Redux/courseSlice';
 
-
-function Course() {
+function Course({course}) {
     const [open, setOpen] = React.useState(false);
-      
+    const  dispatch = useDispatch();
     const handleClickOpen = () => {
       setOpen(true);
     };
-
     const [openSlack, setOpenSlack] = React.useState(false);
     
       const handleClick = () => {
+        dispatch(DeleteTheSavedCourse(course))
+        axios.post('courses/addSavedCourse', {
+            course_id : course._id
+        }).then((save)=>{console.log(save)
+            dispatch(addSavedCourse(course))
+            dispatch(fetchSavedCourses())
+        })
+      
+        
+       
+      
         setOpenSlack(true);
       };
     return (<>
@@ -24,8 +37,8 @@ function Course() {
             <img src="https://cdn.auth0.com/blog/illustrations/react.png"/>
             </CourseAvatar>
             <CourseDetails>
-                <div style={{fontStyle:"italic" ,fontSize: "18px" }}>Course name</div>
-                <div style={{fontFamily: "cursive" ,fontSize: "13px"}}>Course Domain</div>
+                <div style={{fontStyle:"italic" ,fontSize: "18px" }}>{course.title}</div>
+                <div style={{fontFamily: "cursive" ,fontSize: "13px"}}>{course.domain}</div>
             </CourseDetails>
             <Func>
                 <div>
@@ -41,7 +54,7 @@ function Course() {
                 </div>
             </Func>
         </Container>
-        <Dialogs open={open} setOpen={setOpen} />
+        <Dialogs course={course} open={open} setOpen={setOpen} />
         <SnackSave  openSlack={openSlack} setOpenSlack={setOpenSlack} />
         
         </>)

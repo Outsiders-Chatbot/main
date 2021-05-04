@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useContext} from 'react'
 import styled from 'styled-components'
 import SettingsIcon from '@material-ui/icons/Settings';
 import Dialogs from './sidebar/additionalstuff/Dialogs';
@@ -10,6 +10,7 @@ import {addmessage,selectMessages} from '../Redux/chatSlice'
 import { useDispatch , useSelector} from 'react-redux'
 import { useHistory } from "react-router-dom";
 import DialogsSettings from './sidebar/additionalstuff/DialogsSettings';
+import { UserContext } from '../contextProvider/contextProvider';
 
 function ProfileNotif() {
     const [open, setOpen] = React.useState(false);
@@ -38,6 +39,8 @@ function ProfileNotif() {
        }, 3000);
         
     }
+    const {user,setuser} = useContext(UserContext)
+
 
     const [Notification, setNotification] = React.useState(true);
     return (
@@ -48,7 +51,7 @@ function ProfileNotif() {
                     <img src="https://media.istockphoto.com/photos/businesswoman-portrait-on-white-picture-id615279718?k=6&m=615279718&s=612x612&w=0&h=ozD8oKRFXmyyXoAcDuo09WSkmtLSYYlOBuCCNrMyW2Y="/>
                     </Logo>
                     <Headline>
-                        <div>Random user 
+                        <div>chatbotUser
                             <SettingButton onClick={()=>handleClickOpen()}>
                             <SettingsIcon className="settings"/>
                             </SettingButton>

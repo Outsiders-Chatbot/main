@@ -16,8 +16,9 @@ import PublishIcon from '@material-ui/icons/Publish';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ProgressBarSavedCourse from './ProgressBarSavedCourse';
 
-function SavedDialogs({open ,setOpen}) {
-    
+function SavedDialogs({open ,setOpen, course}) {
+
+
     const styles = (theme) => ({
         root: {
           margin: 0,
@@ -72,18 +73,17 @@ function SavedDialogs({open ,setOpen}) {
           <Container>
             <FirstPart>
 
-            <h1>Course titletitletitletit</h1>
-            <h6>lorem lorem lorem lorem lorem lorem orem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem </h6>
+            <h1>{course.course_id.title}</h1>
+            <h6>{course.course_id.description}</h6>
             <Ratingdiv>
-            <div className="rakah" style={{fontWeight:"bold"}}>3</div> <div><Rating value={3.2}/></div> 
+            <div className="rakah" style={{fontWeight:"bold"}}>{course.course_id.rating}</div> <div><Rating value={course.course_id.rating}/></div> 
               </Ratingdiv> 
-            <div>Created by <span style={{color:"#00CED1" ,textDecoration: "underline",marginTop:"10px"}}> author name</span></div>
-            <div style={{display:'flex' , justifyContent:"space-between" , width:"100px",marginTop:"10px"}}>
-              <LanguageIcon style={{ marginRight:"5px"}}/> Language <PublishIcon style={{ marginLeft:"10px", marginRight:"5px"}}/> 12/12/2020 <AccessTimeIcon style={{ marginLeft:"10px" , marginRight:"5px"}}/> 8h30min </div>
-           <div style={{marginTop:"10px"}}> <strong>Requirements :</strong> requirements of our app  </div>
+            <div>Created by <span style={{color:"#00CED1" ,textDecoration: "underline",marginTop:"10px"}}>{course.course_id.author}</span></div>
+            <div style={{display:'flex' , justifyContent:"space-between",whiteSpace:'nowrap' , width:"100px",marginTop:"10px"}}>
+              <LanguageIcon style={{ marginRight:"5px"}}/> {course.language?`${course.language}`:'EN-US'} <PublishIcon style={{ marginLeft:"10px", marginRight:"5px"}}/> {course.course_id.date?`${course.course_id.date}`.substr(0,10):'NaN'}  <AccessTimeIcon style={{ marginLeft:"10px" , marginRight:"5px"}}/>{course.course_id.duration?`${course.course_id.duration}`:'NaN'} </div>
               
             </FirstPart>
-         <ProgressBarSavedCourse Coursename="angular"  percentage="60"/>
+         <ProgressBarSavedCourse Coursename="angular"  percentage={course.progress}/>
               </Container>
   
         </DialogContent>

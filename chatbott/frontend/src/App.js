@@ -1,25 +1,59 @@
 ﻿import React from "react";
 import "./App.css";
-
-import styled from 'styled-components'
-import LeftsideBar from "./components/sidebar/LeftsideBar";
-import Chatbot from "./components/Chatbot";
-import RightsideBar from "./components/sidebar/RightsideBar";
+import axios from './axios/axios';
 
 
 
-//TODO Web Template Studio: Add routes for your new pages here.
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import ChatbotAuth from "./components/ChatbotAuth";
+import ChatbotRegister from "./components/ChatbotRegister";
+import Introduction from "./components/Introduction";
+import Welcome from "./components/Welcome";
+import { UserContext } from './contextProvider/contextProvider';
+import AdminOffice from "./components/AdminOffice";
+import { useHistory } from "react-router-dom";
+
+
 const App = () => {
+  const history = useHistory();
+
+  React.useEffect(() => {
+    axios.get('/getcurrentuser').then((response)=>{
+     
+     setuser(response.data)
+      })
+   
+
+ }, [])
+
+ const [user, setuser] = React.useState()
+ 
     return (
       <div className="App">
-          <Container>
-          
+          <div>
+          <UserContext.Provider value={{user,setuser}}>
+      
+          <Switch>
+                <Route path="/admin">
+                    <AdminOffice/>
+                </Route>
+                <Route path="/Introduction">
+                   <Introduction/>
+                </Route>
+                <Route path="/register">
+                  <ChatbotRegister/>
+                </Route>
+                <Route path="/auth">
+                  <ChatbotAuth/>
+                </Route>
+                <Route path="/">
+                  <Welcome/>
+                </Route>
+          </Switch>
      
-              <LeftsideBar/>
-              <Chatbot/>
-              <RightsideBar/>  
+              </UserContext.Provider>
           
-          </Container>
+          </div>
       
      
     </div>
@@ -30,13 +64,3 @@ export default App;
 
 
 
-
-const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  grid-template-columns:  400px minmax(600px,1fr)  400px;
-  @media (max-width: 1200px) { 
-    grid-template-columns:  0% 100% 0%;
-  }
-  `

@@ -17,9 +17,10 @@ const courseSchenma = new mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: "user"
         },
-    
-    img: String
-})
+
+      img : String
+})  
+
 
 const report = mongoose.model('report',courseSchenma)
 

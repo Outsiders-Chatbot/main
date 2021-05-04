@@ -11,11 +11,15 @@ const courseSchenma = new mongoose.Schema({
         enum : ['job','course'],
         default: 'course'
     },
-    steps: { type : Array , "default" : [] },
+    steps: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "course"
+      }],
     user_id: [
         {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "user"
+          ref: "porteuseDonneScenarioUser"
         }]
 
 })
