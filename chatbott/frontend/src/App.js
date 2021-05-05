@@ -17,6 +17,8 @@ import { UserContext } from "./contextProvider/contextProvider";
 import { useHistory } from "react-router-dom";
 import QuizCategories from "./components/Quiz/QuizCategories";
 import Logout from "./components/Logout"
+import styled from 'styled-components'
+
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -35,7 +37,6 @@ const App = () => {
       console.log('your response for current user',response.data);
       setuser(response.data);
     });
-    history.push('/')
   }, []);
 
   const [user, setuser] = React.useState();
@@ -46,13 +47,25 @@ const App = () => {
       <div>
         <UserContext.Provider value={{ user, setuser }}>
           <Switch>
-              <Route path="/Introduction">
+           {user && user.role=='admin' && <Route path="/admin">
+              <Router>
+                <React.Suspense fallback={loading}>
+                  <Switch>
+                    <Route
+                      path="/"
+                      name="Home"
+                      render={(props) => <TheLayout {...props} />}
+                    />
+                  </Switch>
+                </React.Suspense>
+              </Router>
+            </Route>}
+            <Route path="/Introduction">
               <Introduction />
             </Route>
             <Route path="/register">
               <ChatbotRegister />
             </Route>
-            
             <Route path="/auth">
               <ChatbotAuth />
             </Route>

@@ -35,7 +35,7 @@ function Introduction() {
 
         setUser({...user, error:'', success: res.data.msg})
         localStorage.setItem('firstLogin', true)
-
+        
         dispatch(dispatchLogin())
         history.push('/')
     } catch (err) {

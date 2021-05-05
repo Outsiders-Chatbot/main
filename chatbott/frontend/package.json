@@ -24,6 +24,7 @@
     "firebase-tools": "^9.10.0",
     "formik": "^2.2.6",
     "fs-extra": "9.0.1",
+    "jest": "^26.6.3",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "16.14.0",
@@ -47,7 +48,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "publish": "node ./scripts/publish",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js"
   },
